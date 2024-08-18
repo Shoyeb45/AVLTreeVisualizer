@@ -22,6 +22,7 @@ public class Controller implements Initializable {
 	public void insertInBST() {
 		System.out.println("Insert: " + rootVal.getText());
 		bst.insert(Integer.parseInt(rootVal.getText()));
+		rootVal.clear();
 	}	
 	
 	public void searchInBST() {
