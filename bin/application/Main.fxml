@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1469.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <TextField fx:id="rootVal" layoutX="14.0" layoutY="43.0" prefHeight="26.0" prefWidth="104.0" />
@@ -35,5 +34,7 @@
         </menus>
       </MenuBar>
       <Pane fx:id="pane" layoutY="92.0" prefHeight="688.0" prefWidth="1470.0" style="-fx-background-color: gray;" />
+      <Button fx:id="inorderBtn" alignment="CENTER" layoutX="668.0" layoutY="43.0" mnemonicParsing="false" onAction="#inorder" text="In-order " />
+      <Button fx:id="clearBSTBtn" alignment="CENTER" layoutX="1370.0" layoutY="44.0" mnemonicParsing="false" onAction="#clearBST" text="clear BST" />
    </children>
 </AnchorPane>

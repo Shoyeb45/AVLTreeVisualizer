@@ -47,5 +47,14 @@ public class Controller implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		bst = new BinarySearchTree(pane);
 	}
-
+	
+	public void inorder() {
+		System.out.println("Inorder");
+		bst.inorder();
+	}
+	
+	public void clearBST() {
+		pane.getChildren().clear();
+		bst.clear();
+	}
 }

@@ -55,6 +55,12 @@ public class BinarySearchTree {
 	}
 	
 	/*
+	 * Method for clearing binary search tree
+	 * */
+	public void clear() {
+		root = null;
+	}
+	/*
 	 * Private method for checking if the node is present in Binary Search Tree or not
 	 * @param 
 	 * */
@@ -134,13 +140,18 @@ public class BinarySearchTree {
 	}
 	
 	/*
-	 * Utility method for inorder traversal of binary search tree
+	 * Utility method for in-order traversal of binary search tree
 	 * */
 	private void utilInorder(BSTNode root) {
 		if(root == null) {
 			return;
 		}
 		
-		utilInorder();
+		utilInorder(root.left);
+		root.circle.setStroke(Color.RED);
+		root.circle.setFill(Color.WHITE);
+		utilInorder(root.right);
 	}
+	
+	
 }
