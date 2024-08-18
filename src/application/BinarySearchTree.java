@@ -1,13 +1,16 @@
 package application;
 
 import javafx.util.Duration;
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Alert;
+import javafx.scene.effect.Glow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -34,12 +37,13 @@ public class BinarySearchTree {
 		}
 		if(!this.contains(this.root, val)) {
 			this.insertUtil(this.root, val, root.circle.getCenterX(), root.circle.getCenterY(), false);
+			adjustLayout(root, 0, pane.getWidth(), 50);
 		}
 	}
 	
 	
 	/*
-	 * Method for inorder traversal
+	 * Method for in-order traversal
 	 * */
 	public void inorder() {
 		if(root == null) {
@@ -51,7 +55,10 @@ public class BinarySearchTree {
 			return;
 		}
 		
-		this.utilInorder(root);
+		Duration[] delay = {Duration.seconds(1)};
+		Timeline timeline = new Timeline();
+		this.utilInorder(root, timeline, delay);
+		timeline.play();
 	}
 	
 	/*
@@ -135,23 +142,66 @@ public class BinarySearchTree {
 			return root;
 		} else {
 			root.left = insertUtil(root.left, val, root.circle.getCenterX(), root.circle.getCenterY(), true);
+			return root;
 		}
-		return root;
+	}
+	
+	private void adjustLayout(BSTNode node, double minX, double maxX, double y) {
+	    if (node == null) return;
+
+	    // Calculate the horizontal midpoint for current node
+	    double centerX = (minX + maxX) / 2;
+	    node.circle.setCenterX(centerX);
+	    node.circle.setCenterY(y);
+
+	    double nextY = y + 50; // Adjust vertical distance as needed
+	    
+	    // Adjust left and right subtree positions
+	    adjustLayout(node.left, minX, centerX, nextY);  // Left subtree
+	    adjustLayout(node.right, centerX, maxX, nextY); // Right subtree
 	}
 	
 	/*
 	 * Utility method for in-order traversal of binary search tree
 	 * */
-	private void utilInorder(BSTNode root) {
+	private void utilInorder(BSTNode root, Timeline timeline, Duration[] delay) {
 		if(root == null) {
 			return;
 		}
 		
-		utilInorder(root.left);
-		root.circle.setStroke(Color.RED);
-		root.circle.setFill(Color.WHITE);
-		utilInorder(root.right);
+		utilInorder(root.left, timeline, delay);
+		
+		KeyFrame glowFrame = new KeyFrame(
+					delay[0],
+					event -> applyGlowEffect(root)
+				);
+				
+		KeyFrame resetFrame = new KeyFrame(
+					delay[0].add(Duration.seconds(1)), 
+					event -> resetNodeEffect(root)
+				);
+				
+		timeline.getKeyFrames().addAll(glowFrame, resetFrame);
+		delay[0] = delay[0].add(Duration.seconds(2));
+		
+		utilInorder(root.right, timeline, delay);
 	}
 	
+	/*
+	 * for glow effect
+	 * */
+	private void applyGlowEffect(BSTNode node) {
+        node.circle.setStroke(Color.RED);
+        Glow glow = new Glow(1.0);
+        node.circle.setEffect(glow);
+    }
 	
-}
+	/*
+	 * For resetting the style of node
+	 * */
+	private void resetNodeEffect(BSTNode root) {
+		root.circle.setStroke(Color.BLACK);
+		root.circle.setEffect(null);
+	}
+}	
+
