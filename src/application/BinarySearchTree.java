@@ -37,7 +37,6 @@ public class BinarySearchTree {
 		}
 		if(!this.contains(this.root, val)) {
 			this.insertUtil(this.root, val, root.circle.getCenterX(), root.circle.getCenterY(), false);
-			adjustLayout(root, 0, pane.getWidth(), 50);
 		}
 	}
 	
@@ -146,20 +145,7 @@ public class BinarySearchTree {
 		}
 	}
 	
-	private void adjustLayout(BSTNode node, double minX, double maxX, double y) {
-	    if (node == null) return;
-
-	    // Calculate the horizontal midpoint for current node
-	    double centerX = (minX + maxX) / 2;
-	    node.circle.setCenterX(centerX);
-	    node.circle.setCenterY(y);
-
-	    double nextY = y + 50; // Adjust vertical distance as needed
-	    
-	    // Adjust left and right subtree positions
-	    adjustLayout(node.left, minX, centerX, nextY);  // Left subtree
-	    adjustLayout(node.right, centerX, maxX, nextY); // Right subtree
-	}
+	
 	
 	/*
 	 * Utility method for in-order traversal of binary search tree
