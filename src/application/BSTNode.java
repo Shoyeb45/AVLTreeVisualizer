@@ -22,6 +22,7 @@ public class BSTNode {
 		circle.setCenterX(centerX);
 		circle.setCenterY(centerY);
 		circle.setStroke(Color.BLACK);
+		circle.setStrokeWidth(2);
 		text = new Text(String.valueOf(data));
 		Bounds bounds = text.getBoundsInLocal();
         double textWidth = bounds.getWidth();
