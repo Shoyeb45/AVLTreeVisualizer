@@ -19,10 +19,10 @@ import javafx.scene.text.Text;
 public class BinarySearchTree {
 	
 	private static final int START_Y = 50;
-    private static final int DELTA_X = 40; // Increased to avoid overlap
-    private static final int DELTA_Y = 45; // Increased to ensure proper spacing
+    private static final int DELTA_X = 40; // Horizontal spacing
+    private static final int DELTA_Y = 45; // Vertical spacing between levels
 	private static final double K = 10; // Distance of chord from center, to calculate the start of edges
-	private BSTNode root;
+	private BSTNode root; 
 	private Pane pane;
 	
 	BinarySearchTree(Pane newPane) {
@@ -34,14 +34,14 @@ public class BinarySearchTree {
 	 * Method to insert the value in binary search tree
 	 * */
 	public void insert(int val) {
-		if(root == null) {
-			BSTNode newNode = new BSTNode(val, pane.getWidth() / 2,  START_Y);
+		if(root == null) { 
+			BSTNode newNode = new BSTNode(val, pane.getWidth() / 2,  START_Y); // insert at the center of the pane
 			root = newNode;
-			pane.getChildren().addAll(newNode.circle, newNode.text);
-			return;
+			pane.getChildren().addAll(newNode.circle, newNode.text); // Add node to pane
+			return; 
 		}
 		if(!this.contains(this.root, val)) {
-			this.insertUtil(this.root, val, root.circle.getCenterX(), root.circle.getCenterY(), false);
+			this.insertUtil(this.root, val, root.circle.getCenterX(), root.circle.getCenterY(), false); // Helper method to insert the new value
 		}
 	}
 	
@@ -96,37 +96,37 @@ public class BinarySearchTree {
 	 * */
 	private BSTNode insertUtil(BSTNode root, int val, double centerX, double centerY, boolean isLeft) {
 		if(root == null) {
-			double newCenterX, newCenterY = centerY + DELTA_Y; 
+			double newCenterX, newCenterY = centerY + DELTA_Y;  // Center of new node
 			
 			BSTNode newNode;
-			double dist = Math.sqrt(Math.pow(BSTNode.RADIUS, 2) - Math.pow(K, 2));
+			double dist = Math.sqrt(Math.pow(BSTNode.RADIUS, 2) - Math.pow(K, 2)); // Distance of line from the edge point starting to perpendicular bisector
 			
 			
-			double lineStartX = 0, lineStartY = centerY + K;
+			double lineStartX = 0, lineStartY = centerY + K; // Starting positions of line
 			
 			if(isLeft) {
-				newCenterX = centerX - DELTA_X;
-				newNode = new BSTNode(val, newCenterX, newCenterY);
-				lineStartX = centerX - dist;
+				newCenterX = centerX - DELTA_X; // center of new node
+				newNode = new BSTNode(val, newCenterX, newCenterY); // create node at that center
+				lineStartX = centerX - dist; // starting point of line
 			} else {
 				newCenterX = centerX + DELTA_X;
 				newNode = new BSTNode(val, newCenterX, newCenterY);
-				lineStartX = centerX + dist;
+				lineStartX = centerX + dist; // starting point of line
 			}
 			
-			double lineEndX = newCenterX, lineEndY = newCenterY - 20;
+			double lineEndX = newCenterX, lineEndY = newCenterY - 20; // End points of line 
 			
-			Line line = new Line(lineStartX, lineStartY, lineStartX, lineStartY);	
-			pane.getChildren().addAll(newNode.circle, newNode.text, line);
+			Line line = new Line(lineStartX, lineStartY, lineStartX, lineStartY);	// Drawing line from start(x,y) -> start(x,y), later at animation the end(x,y) is paassed
+			pane.getChildren().addAll(newNode.circle, newNode.text, line); // add to the pane
 			
-			nodeAnimationOfInsertion(newNode, line, lineEndX, lineEndY);
+			nodeAnimationOfInsertion(newNode, line, lineEndX, lineEndY); // Animation
 			return newNode;
 		}
 		
 		if(root.value < val) {
-			root.right = insertUtil(root.right, val, root.circle.getCenterX(), root.circle.getCenterY(), false);
+			root.right = insertUtil(root.right, val, root.circle.getCenterX(), root.circle.getCenterY(), false);  // visit right Subtree
 		} else {
-			root.left = insertUtil(root.left, val, root.circle.getCenterX(), root.circle.getCenterY(), true);
+			root.left = insertUtil(root.left, val, root.circle.getCenterX(), root.circle.getCenterY(), true); // Visit left subtree
 		}
 		return root;
 	}
