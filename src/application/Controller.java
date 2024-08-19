@@ -37,7 +37,7 @@ public class Controller implements Initializable {
 	public void searchInBST() {
 		System.out.println("Search: " + rootVal.getText());
 		try {
-			bst.search(Integer.parseInt(rootVal.getText())); // Calling search function in bst
+			bst.search(Integer.parseInt(rootVal.getText())); // Calling search function in binary search tree
 			rootVal.clear();
 		} catch(NumberFormatException nfe) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
