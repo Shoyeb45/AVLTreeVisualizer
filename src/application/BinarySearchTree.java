@@ -28,6 +28,7 @@ public class BinarySearchTree {
 	 * */
 	public double startX;
 	public BSTNode root; 
+	public BSTNode lastNode;
 	public Pane pane;
 	
 	/*
@@ -50,6 +51,7 @@ public class BinarySearchTree {
 			root = newNode;
 			pane.getChildren().addAll(newNode.circle, newNode.text); // Add node to pane
 			root.addLineToPane(pane); // Add both the left and right lines to pane
+			lastNode = root;
 			return; 
 		}
 		if(!this.contains(this.root, val)) {
@@ -122,6 +124,8 @@ public class BinarySearchTree {
 			pane.getChildren().addAll(newNode.circle, newNode.text); // add to the pane
 			newNode.addLineToPane(pane);
 			nodeAppearance(newNode);
+			
+			lastNode = newNode;
 			return newNode;
 		}
 		
@@ -145,18 +149,6 @@ public class BinarySearchTree {
         nodeAppearance.setToX(1);
         nodeAppearance.setToY(1);
         
-//        Timeline timeline = new Timeline();
-//
-//	    KeyFrame keyFrame = new KeyFrame(
-//	            Duration.seconds(1), // Animation duration
-//	            new KeyValue(line.endXProperty(), endX),
-//	            new KeyValue(line.endYProperty(), endY)
-//	    );
-//	    
-//	    timeline.getKeyFrames().add(keyFrame);
-//	    SequentialTransition sq = new SequentialTransition();
-//	    sq.getChildren().addAll(nodeAppearance, timeline);
-//	    sq.play();
         nodeAppearance.play();
 	}
 	
@@ -176,6 +168,9 @@ public class BinarySearchTree {
 	    timeline.play();
 	}
 	
+	/*
+	 * Method for re-adjusting the centers of nodes after newly inserted node
+	 * */
 	private void resizeTree() {
 		
 		double startingPoint = this.startX;
@@ -197,10 +192,14 @@ public class BinarySearchTree {
 		}
 	}
 
+	/*
+	 * Method for updating the centers of circle with new positions 
+	 * */
 	private void setNewPositions(BSTNode node, double xPosition, double yPosition, int side, double lineStartX, double lineStartY, Line line) {
 	    if (node == null) {
 	        return;
 	    }
+	    
 	    if (side == -1) {
 	        // Position the node based on the left width
 	        xPosition = xPosition - node.rightWidth;
@@ -211,10 +210,17 @@ public class BinarySearchTree {
 	    
 	    // Update the center of circle based on new positions
 	    node.updatePositions(xPosition, yPosition);
+	    
 	    // make lines visible
 	    BSTNode.showLine(line);
-	    // Show animation for growing line from start -> end	    
-	    lineGrowing(line, xPosition, yPosition - BSTNode.RADIUS);
+	    
+	    // Show animation for growing line from start -> end only for newly inserted node    
+	    if(node == lastNode) {
+	    	lineGrowing(line, xPosition, yPosition - BSTNode.RADIUS);	    	
+	    } else {
+	    	line.setEndX(xPosition);
+	    	line.setEndY(yPosition - BSTNode.RADIUS);
+	    }
 	    
 
 	    // Recursively set positions for left and right children
