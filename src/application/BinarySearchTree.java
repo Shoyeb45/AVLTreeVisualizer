@@ -60,6 +60,32 @@ public class BinarySearchTree {
 		}
 	}
 	
+	/*
+	 * Method for searching given value
+	 * */
+	public void search(int val) {
+		Duration[] delay = {Duration.seconds(1)};
+		Timeline timeline = new Timeline();
+		if(this.utilSearch(root, val, timeline, delay)) {
+			timeline.setOnFinished(event -> {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setTitle("Value found");
+				alert.setContentText(val + " found in binary search tree");
+				alert.setHeaderText(null);
+				alert.show();				
+			});
+			timeline.play();
+		} else {
+			timeline.setOnFinished(event -> {
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("BST is empty");
+				alert.setContentText(val + " not found in binary search tree");
+				alert.setHeaderText(null);
+				alert.show();				
+			});
+			timeline.play();
+		}
+	}
 	
 	/*
 	 * Method for in-order traversal
@@ -214,7 +240,7 @@ public class BinarySearchTree {
 	    // make lines visible
 	    BSTNode.showLine(line);
 	    
-	    // Show animation for growing line from start -> end only for newly inserted node    
+	    // Show animation for growing line from start -> end, only for newly inserted node    
 	    if(node == lastNode) {
 	    	lineGrowing(line, xPosition, yPosition - BSTNode.RADIUS);	    	
 	    } else {
@@ -241,7 +267,28 @@ public class BinarySearchTree {
 		return node.leftWidth + node.rightWidth;
 	}
 
-	
+	private boolean utilSearch(BSTNode root, int val, Timeline timeline, Duration[] delay) {
+		if(root == null) {
+			return false;
+		}
+		
+		if(val == root.value) {
+			
+			highlightNode(root, delay[0], timeline);
+			delay[0] = delay[0].add(Duration.seconds(2));
+			return true;
+		} else if(val > root.value) {
+			
+			highlightNode(root, delay[0], timeline);
+			delay[0] = delay[0].add(Duration.seconds(2));
+			return utilSearch(root.right, val, timeline, delay);
+		} else {
+			
+			highlightNode(root, delay[0], timeline);
+			delay[0] = delay[0].add(Duration.seconds(2));
+			return utilSearch(root.left, val, timeline, delay);
+		}
+	}
 	
 	/*
 	 * Utility method for in-order traversal of binary search tree
@@ -252,23 +299,29 @@ public class BinarySearchTree {
 		}
 		
 		utilInorder(root.left, timeline, delay);
-		
-		KeyFrame glowFrame = new KeyFrame(
-					delay[0],
-					event -> applyGlowEffect(root)
-				);
-				
-		KeyFrame resetFrame = new KeyFrame(
-					delay[0].add(Duration.seconds(1)), 
-					event -> resetNodeEffect(root)
-				);
-				
-		timeline.getKeyFrames().addAll(glowFrame, resetFrame);
+
+		highlightNode(root, delay[0], timeline);
 		delay[0] = delay[0].add(Duration.seconds(2));
 		
 		utilInorder(root.right, timeline, delay);
 	}
 	
+	/*
+	 * Method for showing current node highlighted
+	 * */
+	private void highlightNode(BSTNode root, Duration delay, Timeline timeline) {
+		KeyFrame glowFrame = new KeyFrame(
+				delay,
+				event -> applyGlowEffect(root)
+			);
+			
+	KeyFrame resetFrame = new KeyFrame(
+				delay.add(Duration.seconds(1)), 
+				event -> resetNodeEffect(root)
+			);
+			
+	timeline.getKeyFrames().addAll(glowFrame, resetFrame);
+	}
 	/*
 	 * for glow effect
 	 * */

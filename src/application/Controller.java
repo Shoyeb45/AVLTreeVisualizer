@@ -36,6 +36,16 @@ public class Controller implements Initializable {
 	
 	public void searchInBST() {
 		System.out.println("Search: " + rootVal.getText());
+		try {
+			bst.search(Integer.parseInt(rootVal.getText())); // Calling search function in bst
+			rootVal.clear();
+		} catch(NumberFormatException nfe) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Invalid Input");
+			alert.setContentText("Please input an integer number.");
+			alert.setHeaderText(null);
+			alert.showAndWait();
+		}
 	}
 	
 	public void deleteInBST() {
