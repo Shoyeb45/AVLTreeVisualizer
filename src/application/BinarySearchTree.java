@@ -17,6 +17,11 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
 public class BinarySearchTree {
+	
+	private static final int START_Y = 50;
+    private static final int DELTA_X = 40; // Increased to avoid overlap
+    private static final int DELTA_Y = 45; // Increased to ensure proper spacing
+	private static final double K = 10; // Distance of chord from center, to calculate the start of edges
 	private BSTNode root;
 	private Pane pane;
 	
@@ -30,7 +35,7 @@ public class BinarySearchTree {
 	 * */
 	public void insert(int val) {
 		if(root == null) {
-			BSTNode newNode = new BSTNode(val, pane.getWidth() / 2,  50);
+			BSTNode newNode = new BSTNode(val, pane.getWidth() / 2,  START_Y);
 			root = newNode;
 			pane.getChildren().addAll(newNode.circle, newNode.text);
 			return;
@@ -91,59 +96,65 @@ public class BinarySearchTree {
 	 * */
 	private BSTNode insertUtil(BSTNode root, int val, double centerX, double centerY, boolean isLeft) {
 		if(root == null) {
-			double newCenterX, newCenterY; 
+			double newCenterX, newCenterY = centerY + DELTA_Y; 
 			
 			BSTNode newNode;
-			double dist = Math.sqrt(Math.pow(20, 2) - Math.pow(10, 2));
+			double dist = Math.sqrt(Math.pow(BSTNode.RADIUS, 2) - Math.pow(K, 2));
 			
-			double lineStartX = 0, lineStartY = centerY + 10;
+			
+			double lineStartX = 0, lineStartY = centerY + K;
+			
 			if(isLeft) {
-				newCenterX = centerX - 40;
-				newCenterY = centerY + 45;
+				newCenterX = centerX - DELTA_X;
 				newNode = new BSTNode(val, newCenterX, newCenterY);
 				lineStartX = centerX - dist;
 			} else {
-				newCenterX = centerX + 40;
-				newCenterY = centerY + 45;
+				newCenterX = centerX + DELTA_X;
 				newNode = new BSTNode(val, newCenterX, newCenterY);
 				lineStartX = centerX + dist;
 			}
 			
 			double lineEndX = newCenterX, lineEndY = newCenterY - 20;
 			
-			Line line = new Line(lineStartX, lineStartY, lineStartX, lineStartY);
-			
+			Line line = new Line(lineStartX, lineStartY, lineStartX, lineStartY);	
 			pane.getChildren().addAll(newNode.circle, newNode.text, line);
 			
-			ScaleTransition nodeAppearance = new ScaleTransition(Duration.seconds(0.5), newNode.circle);
-            nodeAppearance.setFromX(0.1);
-            nodeAppearance.setFromX(0.1);
-            nodeAppearance.setToX(1);
-            nodeAppearance.setToY(1);
-            
-			Timeline timeline = new Timeline();
-
-		    KeyFrame keyFrame = new KeyFrame(
-		            Duration.seconds(1), // Animation duration
-		            new KeyValue(line.endXProperty(), lineEndX),
-		            new KeyValue(line.endYProperty(), lineEndY)
-		    );
-
-		    timeline.getKeyFrames().add(keyFrame);
-		    SequentialTransition sq = new SequentialTransition();
-		    sq.getChildren().addAll(nodeAppearance, timeline);
-		    sq.play();
+			nodeAnimationOfInsertion(newNode, line, lineEndX, lineEndY);
 			return newNode;
 		}
 		
 		if(root.value < val) {
 			root.right = insertUtil(root.right, val, root.circle.getCenterX(), root.circle.getCenterY(), false);
-			return root;
 		} else {
 			root.left = insertUtil(root.left, val, root.circle.getCenterX(), root.circle.getCenterY(), true);
-			return root;
 		}
+		return root;
 	}
+	
+	/*
+	 * Method for node animation at insertion
+	 * */
+	private void nodeAnimationOfInsertion(BSTNode newNode, Line line , double endX, double endY) {
+		ScaleTransition nodeAppearance = new ScaleTransition(Duration.seconds(0.5), newNode.circle);
+        nodeAppearance.setFromX(0.1);
+        nodeAppearance.setFromX(0.1);
+        nodeAppearance.setToX(1);
+        nodeAppearance.setToY(1);
+        
+        Timeline timeline = new Timeline();
+
+	    KeyFrame keyFrame = new KeyFrame(
+	            Duration.seconds(1), // Animation duration
+	            new KeyValue(line.endXProperty(), endX),
+	            new KeyValue(line.endYProperty(), endY)
+	    );
+	    
+	    timeline.getKeyFrames().add(keyFrame);
+	    SequentialTransition sq = new SequentialTransition();
+	    sq.getChildren().addAll(nodeAppearance, timeline);
+	    sq.play();
+	}
+	
 	
 	
 	

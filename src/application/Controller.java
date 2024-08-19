@@ -11,21 +11,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 public class Controller implements Initializable {
-	private BinarySearchTree bst;
+	private BinarySearchTree bst; // bst object to hold the binary search tree
 	@FXML
-	private TextField rootVal;
+	private TextField rootVal; // TextField for getting text from user
 	
 	@FXML
-	private Button insertBtn, searchBtn, deleteBtn;
+	private Button insertBtn, searchBtn, deleteBtn; // Buttons to do operations
 	
 	@FXML
-	private Pane pane;
+	private Pane pane;  // Pane to hold the binary search tree
 	public void insertInBST() {
 		System.out.println("Insert: " + rootVal.getText());
 		try {
-			bst.insert(Integer.parseInt(rootVal.getText()));
+			bst.insert(Integer.parseInt(rootVal.getText())); // Calling insert function in bst
 			rootVal.clear();
-			
 		} catch(NumberFormatException nfe) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Invalid Input");
@@ -45,7 +44,7 @@ public class Controller implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		bst = new BinarySearchTree(pane);
+		bst = new BinarySearchTree(pane); // initializing empty bst
 	}
 	
 	public void inorder() {
@@ -54,7 +53,7 @@ public class Controller implements Initializable {
 	}
 	
 	public void clearBST() {
-		pane.getChildren().clear();
-		bst.clear();
+		pane.getChildren().clear(); // To clear all the circle and text
+		bst.clear(); // To empty the bst
 	}
 }
