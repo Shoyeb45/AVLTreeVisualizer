@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -26,11 +27,7 @@ public class Controller implements Initializable {
 			bst.insert(Integer.parseInt(rootVal.getText())); // Calling insert function in bst
 			rootVal.clear();
 		} catch(NumberFormatException nfe) {
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Invalid Input");
-			alert.setContentText("Please input an integer number.");
-			alert.setHeaderText(null);
-			alert.showAndWait();
+			showAlert("Please input an integer number.", "Invalid Input", AlertType.ERROR);
 		}
 	}	
 	
@@ -40,16 +37,18 @@ public class Controller implements Initializable {
 			bst.search(Integer.parseInt(rootVal.getText())); // Calling search function in binary search tree
 			rootVal.clear();
 		} catch(NumberFormatException nfe) {
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Invalid Input");
-			alert.setContentText("Please input an integer number.");
-			alert.setHeaderText(null);
-			alert.showAndWait();
+			showAlert("Please input an integer number.", "Invalid Input", AlertType.ERROR);
 		}
 	}
 	
 	public void deleteInBST() {
 		System.out.println("Delete: " + rootVal.getText());
+		try {
+			bst.remove(Integer.parseInt(rootVal.getText())); // Calling search function in binary search tree
+			rootVal.clear();
+		} catch(NumberFormatException nfe) {
+			showAlert("Please input an integer number.", "Invalid Input", AlertType.ERROR);
+		}
 	}
 
 	@Override
@@ -65,5 +64,16 @@ public class Controller implements Initializable {
 	public void clearBST() {
 		pane.getChildren().clear(); // To clear all the circle and text
 		bst.clear(); // To empty the bst
+	}
+	
+	/*
+	 * Method to create and show alert
+	 * */
+	public static void showAlert(String msg, String title, AlertType type) {
+		Alert alert = new Alert(type);
+		alert.setTitle(title);
+		alert.setContentText(msg);
+		alert.setHeaderText(null);
+		alert.show();
 	}
 }

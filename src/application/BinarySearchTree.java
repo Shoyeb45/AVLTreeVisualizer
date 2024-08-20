@@ -1,11 +1,14 @@
 package application;
 
 import javafx.util.Duration;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.Glow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -68,22 +71,28 @@ public class BinarySearchTree {
 		Timeline timeline = new Timeline();
 		if(this.utilSearch(root, val, timeline, delay)) {
 			timeline.setOnFinished(event -> {
-				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-				alert.setTitle("Value found");
-				alert.setContentText(val + " found in binary search tree");
-				alert.setHeaderText(null);
-				alert.show();				
+				Controller.showAlert(val + " found in binary search tree", "Value found", AlertType.CONFIRMATION);
 			});
 			timeline.play();
 		} else {
 			timeline.setOnFinished(event -> {
-				Alert alert = new Alert(Alert.AlertType.INFORMATION);
-				alert.setTitle("BST is empty");
-				alert.setContentText(val + " not found in binary search tree");
-				alert.setHeaderText(null);
-				alert.show();				
+				Controller.showAlert(val + " not found in binary search tree", "Value not found", AlertType.INFORMATION);
 			});
 			timeline.play();
+		}
+	}
+	
+	
+	/*
+	 * Method for deleting a particular node
+	 * */
+	public void remove(int val) {
+		if(root == null) {
+			Controller.showAlert("Cannot delete from an empty binary search tree", "Empty BST", AlertType.WARNING);
+			return;
+		} else {
+			root = this.utilRemove(this.root, val, null);
+			resizeTree();
 		}
 	}
 	
@@ -92,11 +101,7 @@ public class BinarySearchTree {
 	 * */
 	public void inorder() {
 		if(root == null) {
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setTitle("BST is empty");
-			alert.setContentText("Can't perform inorder traversal because binary search tree is empty");
-			alert.setHeaderText(null);
-			alert.showAndWait();
+			Controller.showAlert("Can't perform inorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
 			return;
 		}
 		
@@ -171,7 +176,7 @@ public class BinarySearchTree {
 	private void nodeAppearance(BSTNode newNode) {
 		ScaleTransition nodeAppearance = new ScaleTransition(Duration.seconds(0.5), newNode.circle);
         nodeAppearance.setFromX(0.1);
-        nodeAppearance.setFromX(0.1);
+//        nodeAppearance.setFromX(0.1);
         nodeAppearance.setToX(1);
         nodeAppearance.setToY(1);
         
@@ -290,6 +295,112 @@ public class BinarySearchTree {
 		}
 	}
 	
+	
+	
+	/*
+	 * Utility method for deleting a node from BST
+	 * */
+	private BSTNode utilRemove(BSTNode node, int val, Line line) {
+		if(node == null) {
+			Controller.showAlert(val + " is not present in BST.", "Value not present", AlertType.INFORMATION);
+			return node;
+		}
+		
+		if(val > node.value) {
+			node.right = utilRemove(node.right, val, node.rightEdge);
+		} else if(val < node.value) {
+			node.left = utilRemove(node.left, val, node.leftEdge);
+//			return node;
+		} else {
+			// When node to be removed is leaf node
+			if(node.right == null && node.left == null) {
+				this.nodeDisappearance(node);
+				if(line != null) {
+					line.setStrokeWidth(0);					
+				}
+				return null;
+			}
+			// When node to be removed has one child node - at left
+			else if(node.right == null) {
+//				deleteNodeVisuallyWithOneChild(node, node.left, true, line);
+				this.nodeDisappearance(node);
+				if(line != null) {
+					line.setStrokeWidth(0);					
+				}
+				node.leftEdge.setStrokeWidth(0);
+				return node.left;
+			}
+			// When node to be removed has one child node - at right
+			else if(node.left == null) {
+				
+				this.nodeDisappearance(node);
+				if(line != null) {
+					line.setStrokeWidth(0);					
+				}
+				node.rightEdge.setStrokeWidth(0);
+				return node.right;
+			}
+			// When node to be removed has two child nodes
+			else {
+				BSTNode inorderPredecessor = node.left;
+				
+				while(inorderPredecessor.right != null) {
+					inorderPredecessor = inorderPredecessor.right;
+				}
+				node.value = inorderPredecessor.value;
+				node.left = utilRemove(node.left, node.value, node.leftEdge);
+//				return node;
+			}
+		}
+		return node;
+	}
+	
+	/*
+	 * Method for showing disappearance of node
+	 * */
+	private void nodeDisappearance(BSTNode node) {
+		ScaleTransition nodeDisappear = new ScaleTransition(Duration.seconds(1), node.circle);
+        nodeDisappear.setFromX(1);
+        nodeDisappear.setFromX(1);
+        nodeDisappear.setToX(0);
+        nodeDisappear.setToY(0);
+        
+        FadeTransition fadeEffect = new FadeTransition(Duration.seconds(1), node.circle);
+        fadeEffect.setFromValue(1.0);
+        fadeEffect.setToValue(0.0);
+//        nodeDisappear.play();
+        
+        ParallelTransition parallelTransition = new ParallelTransition(nodeDisappear, fadeEffect);
+        
+        parallelTransition.setOnFinished(event -> {
+        	pane.getChildren().remove(node.circle);
+        	pane.getChildren().remove(node.text);
+        });
+        
+        parallelTransition.play();
+	}
+	
+	/*
+	 * Method for deleting node with one child - visually
+	 * */
+	private void deleteNodeVisuallyWithOneChild(BSTNode parent, BSTNode child, boolean isLeft, Line line) {
+		double x = parent.circle.getCenterX(), y = parent.circle.getCenterY();
+		
+		// Delete current node from pane
+		this.nodeDisappearance(parent);
+		pane.getChildren().removeAll(parent.text);
+//		// Delete lines
+//		if(line != null) {
+//			line.setStrokeWidth(0);
+//		}
+//		
+//		if(isLeft) {
+//			parent.leftEdge.setStrokeWidth(0);
+//		} else {
+//			parent.rightEdge.setStrokeWidth(0);
+//		}
+	}
+	
 	/*
 	 * Utility method for in-order traversal of binary search tree
 	 * */
@@ -322,6 +433,7 @@ public class BinarySearchTree {
 			
 	timeline.getKeyFrames().addAll(glowFrame, resetFrame);
 	}
+	
 	/*
 	 * for glow effect
 	 * */
