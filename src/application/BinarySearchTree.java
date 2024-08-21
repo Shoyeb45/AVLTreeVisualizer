@@ -5,9 +5,9 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.ParallelTransition;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.Glow;
 import javafx.scene.layout.Pane;
@@ -58,8 +58,10 @@ public class BinarySearchTree {
 			return; 
 		}
 		if(!this.contains(this.root, val)) {
-			this.insertUtil(this.root, val, root.circle.getCenterX(), root.circle.getCenterY(), false); // Helper method to insert the new value
+			insertUtil(this.root, val, root.circle.getCenterX(), root.circle.getCenterY(), false); // Helper method to insert the new value
 			resizeTree(); // For visually balancing the binary search Tree
+		} else {
+			Controller.showAlert(val + " is already present is binary search tree.", "Duplicate value found", AlertType.INFORMATION);
 		}
 	}
 	
@@ -92,7 +94,12 @@ public class BinarySearchTree {
 			return;
 		} else {
 			root = this.utilRemove(this.root, val, null);
-			resizeTree();
+			PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1));
+			pauseTransition.play();
+			pauseTransition.setOnFinished(event -> {
+				System.out.println("Pause Transition");
+				resizeTree();
+			});
 		}
 	}
 	
@@ -153,9 +160,8 @@ public class BinarySearchTree {
 			
 			newNode = new BSTNode(val, newCenterX, newCenterY); // creating new node
 			pane.getChildren().addAll(newNode.circle, newNode.text); // add to the pane
+			nodeAppearance(newNode);				
 			newNode.addLineToPane(pane);
-			nodeAppearance(newNode);
-			
 			lastNode = newNode;
 			return newNode;
 		}
@@ -163,9 +169,12 @@ public class BinarySearchTree {
 		if(root.value < val) {
 			// visit right Subtree
 			root.right = insertUtil(root.right, val, root.circle.getCenterX(), root.circle.getCenterY(), false);  
-		} else {
+		} else if(root.value > val) {
 			// Visit left subtree
 			root.left = insertUtil(root.left, val, root.circle.getCenterX(), root.circle.getCenterY(), true); 
+		} else {
+			// If the element is already present in binary search tree
+			return root;
 		}
 		return root;
 	}
@@ -279,17 +288,17 @@ public class BinarySearchTree {
 		
 		if(val == root.value) {
 			
-			highlightNode(root, delay[0], timeline);
+			highlightNode(root, delay[0], timeline, Color.GREEN);
 			delay[0] = delay[0].add(Duration.seconds(2));
 			return true;
 		} else if(val > root.value) {
 			
-			highlightNode(root, delay[0], timeline);
+			highlightNode(root, delay[0], timeline, Color.RED);
 			delay[0] = delay[0].add(Duration.seconds(2));
 			return utilSearch(root.right, val, timeline, delay);
 		} else {
 			
-			highlightNode(root, delay[0], timeline);
+			highlightNode(root, delay[0], timeline, Color.RED);
 			delay[0] = delay[0].add(Duration.seconds(2));
 			return utilSearch(root.left, val, timeline, delay);
 		}
@@ -344,17 +353,55 @@ public class BinarySearchTree {
 			else {
 				BSTNode inorderPredecessor = node.left;
 				
+				Duration delay = Duration.seconds(1);
+				Timeline timeline = new Timeline();
+				
 				while(inorderPredecessor.right != null) {
+					highlightNode(inorderPredecessor, delay, timeline, Color.GREEN);
 					inorderPredecessor = inorderPredecessor.right;
+					
+					delay = delay.add(Duration.seconds(2));
 				}
+				highlightNode(inorderPredecessor, delay, timeline, Color.RED);
+				delay = delay.add(Duration.seconds(2));
+				
+				
 				node.value = inorderPredecessor.value;
-				node.left = utilRemove(node.left, node.value, node.leftEdge);
-//				return node;
+				timeline.setOnFinished(event -> {
+					FadeTransition ft = new FadeTransition(Duration.seconds(1), node.text);
+					ft.setFromValue(1.0);
+					ft.setToValue(0.0);
+					
+					ft.setOnFinished(event2 -> {
+						node.text.setText(String.valueOf(node.value));
+						node.text.setOpacity(1);
+						ScaleTransition textAppearance = new ScaleTransition(Duration.seconds(1), node.text);
+						textAppearance.setFromX(0.0);
+						textAppearance.setToX(1);
+						textAppearance.setToY(1);
+						
+						textAppearance.play();
+						
+					});
+					ft.play();
+					
+					
+					PauseTransition pt = new PauseTransition(Duration.seconds(1));
+					
+					pt.setOnFinished(event2 -> {
+						node.left = utilRemove(node.left, node.value, node.leftEdge);	
+						resizeTree();
+					});
+					pt.play();
+				});
+				timeline.play();
 			}
 		}
 		return node;
 	}
 	
+	    
+
 	/*
 	 * Method for showing disappearance of node
 	 * */
@@ -368,38 +415,19 @@ public class BinarySearchTree {
         FadeTransition fadeEffect = new FadeTransition(Duration.seconds(1), node.circle);
         fadeEffect.setFromValue(1.0);
         fadeEffect.setToValue(0.0);
-//        nodeDisappear.play();
+        
+        nodeDisappear.play();
         
         ParallelTransition parallelTransition = new ParallelTransition(nodeDisappear, fadeEffect);
-        
         parallelTransition.setOnFinished(event -> {
         	pane.getChildren().remove(node.circle);
-        	pane.getChildren().remove(node.text);
         });
         
+        pane.getChildren().remove(node.text);
         parallelTransition.play();
 	}
 	
-	/*
-	 * Method for deleting node with one child - visually
-	 * */
-	private void deleteNodeVisuallyWithOneChild(BSTNode parent, BSTNode child, boolean isLeft, Line line) {
-		double x = parent.circle.getCenterX(), y = parent.circle.getCenterY();
-		
-		// Delete current node from pane
-		this.nodeDisappearance(parent);
-		pane.getChildren().removeAll(parent.text);
-//		// Delete lines
-//		if(line != null) {
-//			line.setStrokeWidth(0);
-//		}
-//		
-//		if(isLeft) {
-//			parent.leftEdge.setStrokeWidth(0);
-//		} else {
-//			parent.rightEdge.setStrokeWidth(0);
-//		}
-	}
+
 	
 	/*
 	 * Utility method for in-order traversal of binary search tree
@@ -411,7 +439,7 @@ public class BinarySearchTree {
 		
 		utilInorder(root.left, timeline, delay);
 
-		highlightNode(root, delay[0], timeline);
+		highlightNode(root, delay[0], timeline, Color.RED);
 		delay[0] = delay[0].add(Duration.seconds(2));
 		
 		utilInorder(root.right, timeline, delay);
@@ -420,10 +448,10 @@ public class BinarySearchTree {
 	/*
 	 * Method for showing current node highlighted
 	 * */
-	private void highlightNode(BSTNode root, Duration delay, Timeline timeline) {
+	private void highlightNode(BSTNode root, Duration delay, Timeline timeline, Color color) {
 		KeyFrame glowFrame = new KeyFrame(
 				delay,
-				event -> applyGlowEffect(root)
+				event -> applyGlowEffect(root, color)
 			);
 			
 	KeyFrame resetFrame = new KeyFrame(
@@ -437,8 +465,8 @@ public class BinarySearchTree {
 	/*
 	 * for glow effect
 	 * */
-	private void applyGlowEffect(BSTNode node) {
-        node.circle.setStroke(Color.RED);
+	private void applyGlowEffect(BSTNode node, Color color) {
+        node.circle.setStroke(color);
         Glow glow = new Glow(1.0);
         node.circle.setEffect(glow);
     }

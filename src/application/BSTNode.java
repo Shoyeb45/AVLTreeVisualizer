@@ -90,7 +90,7 @@ public class BSTNode {
 	}
 	
 	public static void showLine(Line line) {
-		line.setStrokeWidth(1);
+		line.setStrokeWidth(2);
 	}
 	
 	public void addLineToPane(Pane pane) {

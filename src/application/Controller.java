@@ -22,7 +22,6 @@ public class Controller implements Initializable {
 	@FXML
 	private Pane pane;  // Pane to hold the binary search tree
 	public void insertInBST() {
-		System.out.println("Insert: " + rootVal.getText());
 		try {
 			bst.insert(Integer.parseInt(rootVal.getText())); // Calling insert function in bst
 			rootVal.clear();
@@ -32,7 +31,6 @@ public class Controller implements Initializable {
 	}	
 	
 	public void searchInBST() {
-		System.out.println("Search: " + rootVal.getText());
 		try {
 			bst.search(Integer.parseInt(rootVal.getText())); // Calling search function in binary search tree
 			rootVal.clear();
@@ -42,7 +40,6 @@ public class Controller implements Initializable {
 	}
 	
 	public void deleteInBST() {
-		System.out.println("Delete: " + rootVal.getText());
 		try {
 			bst.remove(Integer.parseInt(rootVal.getText())); // Calling search function in binary search tree
 			rootVal.clear();
@@ -57,7 +54,6 @@ public class Controller implements Initializable {
 	}
 	
 	public void inorder() {
-		System.out.println("Inorder");
 		bst.inorder();
 	}
 	
