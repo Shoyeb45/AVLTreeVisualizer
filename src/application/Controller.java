@@ -17,7 +17,7 @@ public class Controller implements Initializable {
 	private TextField rootVal; // TextField for getting text from user
 	
 	@FXML
-	private Button insertBtn, searchBtn, deleteBtn; // Buttons to do operations
+	private Button insertBtn, searchBtn, deleteBtn, inorderBtn, preorderBtn, postorderBtn, levelorderBtn; // Buttons to do operations
 	
 	@FXML
 	private Pane pane;  // Pane to hold the binary search tree
@@ -53,8 +53,32 @@ public class Controller implements Initializable {
 		bst = new BinarySearchTree(pane); // initializing empty bst
 	}
 	
+	/*
+	 * Method associated with inorder button
+	 * */
 	public void inorder() {
 		bst.inorder();
+	}
+	
+	/*
+	 * Method associated with preorder button
+	 * */
+	public void preorder() {
+		bst.preorder();
+	}
+	
+	/*
+	 * Method associated with postorder button
+	 * */
+	public void postorder() {
+		bst.postorder();
+	}
+	
+	/*
+	 * Method associated with levelorder button
+	 * */
+	public void levelorder() {
+		bst.levelorder();
 	}
 	
 	public void clearBST() {
@@ -72,4 +96,6 @@ public class Controller implements Initializable {
 		alert.setHeaderText(null);
 		alert.show();
 	}
+	
+	
 }

@@ -119,6 +119,26 @@ public class BinarySearchTree {
 	}
 	
 	/*
+	 * Method for pre-order traversal
+	 * */
+	public void preorder() {
+		
+	}
+	
+	/*
+	 * Method for post-order traversal
+	 * */
+	public void postorder() {
+		
+	}
+	
+	/*
+	 * Method for level-order traversal
+	 * */
+	public void levelorder() {
+		
+	}
+	/*
 	 * Method for clearing binary search tree
 	 * */
 	public void clear() {
