@@ -1,5 +1,6 @@
 package application;
 
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
@@ -21,6 +23,9 @@ public class Controller implements Initializable {
 	
 	@FXML
 	private Pane pane;  // Pane to hold the binary search tree
+	
+	@FXML
+	private Label myLabel;
 	public void insertInBST() {
 		try {
 			bst.insert(Integer.parseInt(rootVal.getText())); // Calling insert function in bst
@@ -46,6 +51,8 @@ public class Controller implements Initializable {
 		} catch(NumberFormatException nfe) {
 			showAlert("Please input an integer number.", "Invalid Input", AlertType.ERROR);
 		}
+		
+		
 	}
 
 	@Override
@@ -57,28 +64,28 @@ public class Controller implements Initializable {
 	 * Method associated with inorder button
 	 * */
 	public void inorder() {
-		bst.inorder();
+		bst.inorder(myLabel);
 	}
 	
 	/*
 	 * Method associated with preorder button
 	 * */
 	public void preorder() {
-		bst.preorder();
+		bst.preorder(myLabel);
 	}
 	
 	/*
 	 * Method associated with postorder button
 	 * */
 	public void postorder() {
-		bst.postorder();
+		bst.postorder(myLabel);
 	}
 	
 	/*
 	 * Method associated with levelorder button
 	 * */
 	public void levelorder() {
-		bst.levelorder();
+		bst.levelorder(myLabel);
 	}
 	
 	public void clearBST() {

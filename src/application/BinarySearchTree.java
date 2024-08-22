@@ -1,6 +1,11 @@
 package application;
 
 import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -9,6 +14,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -33,7 +39,7 @@ public class BinarySearchTree {
 	public BSTNode root; 
 	public BSTNode lastNode;
 	public Pane pane;
-	
+//	public ArrayList<Integer> trav;
 	/*
 	 * Constructor sets root to null and initializes pane
 	 * */
@@ -106,37 +112,91 @@ public class BinarySearchTree {
 	/*
 	 * Method for in-order traversal
 	 * */
-	public void inorder() {
+	public void inorder(Label label) {
 		if(root == null) {
 			Controller.showAlert("Can't perform inorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
 			return;
 		}
-		
+		ArrayList<Integer> trav = new ArrayList<>();
 		Duration[] delay = {Duration.seconds(1)};
 		Timeline timeline = new Timeline();
-		this.utilInorder(root, timeline, delay);
+		this.utilInorder(root, timeline, delay, trav);
 		timeline.play();
+		timeline.setOnFinished(event -> {
+			label.setText(this.makeLabel(trav, "Inorder Traversal"));
+		});
+		
 	}
+	
 	
 	/*
 	 * Method for pre-order traversal
 	 * */
-	public void preorder() {
+	public void preorder(Label label) {
+		if(root == null) {
+			Controller.showAlert("Can't perform preorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
+			return;
+		}
+		ArrayList<Integer> trav = new ArrayList<>();
+		Duration[] delay = {Duration.seconds(1)};
+		Timeline timeline = new Timeline();
+		this.utilPreorder(root, timeline, delay, trav);
+		timeline.play();
+		timeline.setOnFinished(event -> {
+			label.setText(this.makeLabel(trav, "Preorder Traversal"));
+		});
 		
 	}
 	
 	/*
 	 * Method for post-order traversal
 	 * */
-	public void postorder() {
-		
+	public void postorder(Label label) {
+		if(root == null) {
+			Controller.showAlert("Can't perform postorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
+			return;
+		}
+		ArrayList<Integer> trav = new ArrayList<>();
+		Duration[] delay = {Duration.seconds(1)};
+		Timeline timeline = new Timeline();
+		this.utilPostorder(root, timeline, delay, trav);
+		timeline.play();
+		timeline.setOnFinished(event -> {
+			label.setText(this.makeLabel(trav, "Postorder Traversal"));
+		});
 	}
 	
 	/*
 	 * Method for level-order traversal
 	 * */
-	public void levelorder() {
+	public void levelorder(Label label) {
+		if(root == null) {
+			Controller.showAlert("Can't perform postorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
+			return;
+		}
+		ArrayList<ArrayList<Integer>> trav = new ArrayList<>();
+		Duration[] delay = {Duration.seconds(1)};
+		Timeline timeline = new Timeline();
+		this.utilLevelorder(root, timeline, delay, trav);
 		
+		StringBuilder str = new StringBuilder("Level Order Traversal\n");
+		
+		for(ArrayList<Integer> it: trav) {
+			for(int i = 0; i < it.size(); i++) {
+				if(i == 0) {
+					str.append("[ ").append(it.get(i)).append(" ");
+				}
+				else if(i == it.size() - 1) {
+					str.append(it.get(i)).append(" ]");
+				} else {
+					str.append(it.get(i) + " ");
+				}
+			}
+		}
+		timeline.setOnFinished(event -> {
+			label.setText(String.valueOf(str));
+		});
+		timeline.play();
 	}
 	/*
 	 * Method for clearing binary search tree
@@ -452,18 +512,85 @@ public class BinarySearchTree {
 	/*
 	 * Utility method for in-order traversal of binary search tree
 	 * */
-	private void utilInorder(BSTNode root, Timeline timeline, Duration[] delay) {
+	private void utilInorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
 		if(root == null) {
 			return;
 		}
 		
-		utilInorder(root.left, timeline, delay);
-
+		utilInorder(root.left, timeline, delay, trav);
+		
+		trav.add(root.value);
 		highlightNode(root, delay[0], timeline, Color.RED);
 		delay[0] = delay[0].add(Duration.seconds(2));
 		
-		utilInorder(root.right, timeline, delay);
+		utilInorder(root.right, timeline, delay, trav);
 	}
+	
+	/*
+	 * 
+	 * */
+	private void utilPreorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
+		if(root == null) {
+			return;
+		}
+		
+		trav.add(root.value);
+		highlightNode(root, delay[0], timeline, Color.RED);
+		delay[0] = delay[0].add(Duration.seconds(2));
+		utilPreorder(root.left, timeline, delay, trav);
+		utilPreorder(root.right, timeline, delay, trav);
+	}
+	
+	/*
+	 * 
+	 * */
+	private void utilPostorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
+		if(root == null) {
+			return;
+		}
+		utilPostorder(root.left, timeline, delay, trav);
+		utilPostorder(root.right, timeline, delay, trav);
+		
+		trav.add(root.value);
+		highlightNode(root, delay[0], timeline, Color.RED);
+		delay[0] = delay[0].add(Duration.seconds(2));
+	}
+	
+	private void utilLevelorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<ArrayList<Integer>> trav) {
+		Queue<BSTNode> q = new LinkedList<>();
+		
+		q.add(root);
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		temp.add(root.value);
+		trav.add(temp);
+		highlightNode(root, delay[0], timeline, Color.RED);
+		delay[0] = delay[0].add(Duration.seconds(2));
+		while(!q.isEmpty()) {
+			
+			int k = q.size();
+			temp = new ArrayList<Integer>();
+			
+			for(int i = 1; i <= k; i++) {
+				BSTNode node = q.poll();
+				if(node.left != null) {
+					temp.add(node.left.value);
+					q.add(node.left);
+					highlightNode(node.left, delay[0], timeline, Color.RED);
+					delay[0] = delay[0].add(Duration.seconds(2));
+				}
+				
+				if(node.right != null) {
+					temp.add(node.right.value);
+					q.add(node.right);
+					
+					highlightNode(node.right, delay[0], timeline, Color.RED);
+					delay[0] = delay[0].add(Duration.seconds(2));
+				}
+			}
+			trav.add(temp);
+		}
+	}
+	
 	
 	/*
 	 * Method for showing current node highlighted
@@ -482,6 +609,15 @@ public class BinarySearchTree {
 	timeline.getKeyFrames().addAll(glowFrame, resetFrame);
 	}
 	
+	
+	private String makeLabel(ArrayList<Integer> trav, String head) {
+		StringBuilder ans = new StringBuilder(head + "\n");
+		
+		for(int x : trav) {
+			ans.append(x).append(" ");
+		}
+		return String.valueOf(ans);
+	}
 	/*
 	 * for glow effect
 	 * */
