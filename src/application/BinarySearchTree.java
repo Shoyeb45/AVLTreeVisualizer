@@ -22,9 +22,9 @@ import javafx.scene.shape.Line;
 
 public class BinarySearchTree {
 	
-	/*
+	/**
 	 * Constant Values
-	 * */
+	 */
 	public final static int START_Y = 50; // Initial coordinate of binary search tree node in y-axis 
     public final static int DELTA_X = 50; // Horizontal spacing
     public final static int DELTA_Y = 50; // Vertical spacing between levels
@@ -32,25 +32,28 @@ public class BinarySearchTree {
 	public final static double DIST = Math.sqrt(Math.pow(BSTNode.RADIUS, 2) - Math.pow(K, 2));  // Distance of line from the edge point starting to perpendicular bisector
 	
 	
-	/*
+	/**
 	 * Attributes of Binary Search Tree Class
-	 * */
+	 */
 	public double startX;
 	public BSTNode root; 
 	public BSTNode lastNode;
 	public Pane pane;
-//	public ArrayList<Integer> trav;
-	/*
+
+	/**
 	 * Constructor sets root to null and initializes pane
-	 * */
+	 * @param newPane : pane for holding Tree
+	 */
 	BinarySearchTree(Pane newPane) {
 		pane = newPane;
 		root = null;
 	}
 	
-	/*
+	/**
 	 * Method to insert the value in binary search tree
-	 * */
+	 * @param val : value that needs to be inserted in Tree
+	 * @return none
+	 */
 	public void insert(int val) {
 		
 		// When binary search tree is empty
@@ -63,6 +66,7 @@ public class BinarySearchTree {
 			lastNode = root;
 			return; 
 		}
+
 		if(!this.contains(this.root, val)) {
 			insertUtil(this.root, val, root.circle.getCenterX(), root.circle.getCenterY(), false); // Helper method to insert the new value
 			resizeTree(); // For visually balancing the binary search Tree
@@ -71,18 +75,24 @@ public class BinarySearchTree {
 		}
 	}
 	
-	/*
+	/**
 	 * Method for searching given value
-	 * */
+	 * @param val : Value that needs to be searched in Tree
+	 * @return none
+	 */
 	public void search(int val) {
 		Duration[] delay = {Duration.seconds(1)};
 		Timeline timeline = new Timeline();
+
+		// value is found
 		if(this.utilSearch(root, val, timeline, delay)) {
 			timeline.setOnFinished(event -> {
 				Controller.showAlert(val + " found in binary search tree", "Value found", AlertType.CONFIRMATION);
 			});
 			timeline.play();
-		} else {
+		} 
+		// value not found
+		else {
 			timeline.setOnFinished(event -> {
 				Controller.showAlert(val + " not found in binary search tree", "Value not found", AlertType.INFORMATION);
 			});
@@ -91,10 +101,15 @@ public class BinarySearchTree {
 	}
 	
 	
-	/*
+
+	/**
 	 * Method for deleting a particular node
-	 * */
+	 * @param val : Value to be removed
+	 * @return none
+	 */
 	public void remove(int val) {
+
+		// If the Tree is empty
 		if(root == null) {
 			Controller.showAlert("Cannot delete from an empty binary search tree", "Empty BST", AlertType.WARNING);
 			return;
@@ -109,19 +124,29 @@ public class BinarySearchTree {
 		}
 	}
 	
-	/*
+	/**
 	 * Method for in-order traversal
-	 * */
+	 * @param label : label for showing the traversal 
+	*/
 	public void inorder(Label label) {
+
+		// If tree is empty
 		if(root == null) {
 			Controller.showAlert("Can't perform inorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
 			return;
 		}
+		
+		// ArrayList for storing the values
 		ArrayList<Integer> trav = new ArrayList<>();
+
 		Duration[] delay = {Duration.seconds(1)};
 		Timeline timeline = new Timeline();
+
+		// Calling utility method for actual traversal and animation
 		this.utilInorder(root, timeline, delay, trav);
-		timeline.play();
+		timeline.play(); // Play the animation
+
+		// Once animation is finished show traversal series
 		timeline.setOnFinished(event -> {
 			label.setText(this.makeLabel(trav, "Inorder Traversal"));
 		});
@@ -129,85 +154,122 @@ public class BinarySearchTree {
 	}
 	
 	
-	/*
+	
+	/**
 	 * Method for pre-order traversal
-	 * */
+	 * @param label : label for showing the traversal 
+	 */
 	public void preorder(Label label) {
+
+		// If tree is empty
 		if(root == null) {
 			Controller.showAlert("Can't perform preorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
 			return;
 		}
+
+		// ArrayList for storing the values
 		ArrayList<Integer> trav = new ArrayList<>();
 		Duration[] delay = {Duration.seconds(1)};
 		Timeline timeline = new Timeline();
+
+		// Calling utility method for actual traversal and animation
 		this.utilPreorder(root, timeline, delay, trav);
-		timeline.play();
+		timeline.play(); // Play the animation
+
+		// Once animation is finished show traversal series
 		timeline.setOnFinished(event -> {
 			label.setText(this.makeLabel(trav, "Preorder Traversal"));
 		});
 		
 	}
 	
-	/*
+	/**
 	 * Method for post-order traversal
-	 * */
+	 * @param label : label for showing the traversal 
+	 */
 	public void postorder(Label label) {
+
+		// If tree is empty
 		if(root == null) {
 			Controller.showAlert("Can't perform postorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
 			return;
 		}
+
+		// ArrayList for storing the values
 		ArrayList<Integer> trav = new ArrayList<>();
 		Duration[] delay = {Duration.seconds(1)};
 		Timeline timeline = new Timeline();
+
+		// Calling utility method for actual traversal and animation
 		this.utilPostorder(root, timeline, delay, trav);
-		timeline.play();
+		timeline.play(); // Play the animation
+
+		// Once animation is finished show traversal series
 		timeline.setOnFinished(event -> {
 			label.setText(this.makeLabel(trav, "Postorder Traversal"));
 		});
 	}
 	
-	/*
+	/**
 	 * Method for level-order traversal
-	 * */
+	 * @param label : label for showing the traversal 
+	 */
 	public void levelorder(Label label) {
+
+		// If tree is empty
 		if(root == null) {
 			Controller.showAlert("Can't perform postorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
 			return;
 		}
+
+		// ArrayList for storing the values
 		ArrayList<ArrayList<Integer>> trav = new ArrayList<>();
+
 		Duration[] delay = {Duration.seconds(1)};
 		Timeline timeline = new Timeline();
+
+		// Calling utility method for actual traversal and animation
 		this.utilLevelorder(root, timeline, delay, trav);
 		
 		StringBuilder str = new StringBuilder("Level Order Traversal\n");
 		
 		for(ArrayList<Integer> it: trav) {
+
 			for(int i = 0; i < it.size(); i++) {
 				if(i == 0) {
 					str.append("[ ").append(it.get(i)).append(" ");
 				}
 				else if(i == it.size() - 1) {
 					str.append(it.get(i)).append(" ]");
-				} else {
+				} 
+				else {
 					str.append(it.get(i) + " ");
 				}
 			}
+			if(it.size() == 1) {
+				str.append("]");
+			}
+
 		}
+
+		// Once animation is finished show traversal series
 		timeline.setOnFinished(event -> {
 			label.setText(String.valueOf(str));
 		});
-		timeline.play();
+		timeline.play(); // Play the animation
 	}
-	/*
+	
+	/**
 	 * Method for clearing binary search tree
 	 * */
 	public void clear() {
 		root = null;
 	}
-	/*
+
+	/**
 	 * Private method for checking if the node is present in Binary Search Tree or not
-	 * @param 
-	 * */
+	 * @param root,val 
+	 */
 	private boolean contains(BSTNode root, int val) {
 		if(root == null) {
 			return false;
@@ -222,10 +284,15 @@ public class BinarySearchTree {
 			return contains(root.left, val);
 		}
 	}
-	
-	/*
-	 * Utility Method for inserting new node in given position
-	 * */
+	 /**
+	  * Utility Method for inserting new node in given position
+	  * @param root    : Root node of Tree
+	  * @param val     : Value to be inserted
+	  * @param centerX : x-coordinate of center of circle of current node
+	  * @param centerY : y-coordinate of center of circle of current node
+	  * @param isLeft  : boolean value to determine the left or right subtree of node to be inserted  
+	  * @return BSTNode
+	  */
 	private BSTNode insertUtil(BSTNode root, int val, double centerX, double centerY, boolean isLeft) {
 		
 		if(root == null) {
@@ -233,16 +300,17 @@ public class BinarySearchTree {
 			BSTNode newNode;
 			
 			if(isLeft) {
-				newCenterX = centerX - DELTA_X; // center of new node
+				newCenterX = centerX - DELTA_X; // Insert the node at left side of parent node
 			} else {
-				newCenterX = centerX + DELTA_X;
+				newCenterX = centerX + DELTA_X; // Insert the node at right side of parent node
 			}
 			
-			newNode = new BSTNode(val, newCenterX, newCenterY); // creating new node
-			pane.getChildren().addAll(newNode.circle, newNode.text); // add to the pane
-			nodeAppearance(newNode);				
-			newNode.addLineToPane(pane);
-			lastNode = newNode;
+			newNode = new BSTNode(val, newCenterX, newCenterY);      // Creating new node
+			pane.getChildren().addAll(newNode.circle, newNode.text); // Add to the pane
+			nodeAppearance(newNode);								 // Call function to show the node apperance animation
+			newNode.addLineToPane(pane);							 // Add line to the pane
+			lastNode = newNode;										
+
 			return newNode;
 		}
 		
@@ -259,22 +327,25 @@ public class BinarySearchTree {
 		return root;
 	}
 	
-	/*
+
+	/**
 	 * Method for animation of node appearance at insertion
-	 * */
+	 * @param newNode : node to show the appearance animation
+	 */
 	private void nodeAppearance(BSTNode newNode) {
 		ScaleTransition nodeAppearance = new ScaleTransition(Duration.seconds(0.5), newNode.circle);
         nodeAppearance.setFromX(0.1);
-//        nodeAppearance.setFromX(0.1);
         nodeAppearance.setToX(1);
         nodeAppearance.setToY(1);
-        
         nodeAppearance.play();
 	}
 	
-	/*
+	/**
 	 * Method for animation of line growing
-	 * */
+	 * @param line : The line which needs to be shown as growing
+	 * @param endX : x-point of end point of line
+	 * @param endY : y-point of end point of line
+	 */
 	private void lineGrowing(Line line, double endX, double endY) {
 		Timeline timeline = new Timeline();
 
@@ -288,34 +359,46 @@ public class BinarySearchTree {
 	    timeline.play();
 	}
 	
-	/*
+	/**
 	 * Method for re-adjusting the centers of nodes after newly inserted node
-	 * */
+	 */	 
 	private void resizeTree() {
 		
-		double startingPoint = this.startX;
+		double startingPoint = this.startX;  // Center of the pane
 		this.resizeWidths(root);  // Update the left and right width of every node
 		
 		if(root != null) {
-			// Update starting point
+
+			// If left side has more nodes, then update the starting point to leftWidth 
 			if(this.root.leftWidth > startingPoint) {
 				startingPoint = this.root.leftWidth;
-			} else if(this.root.rightWidth > startingPoint) {
+			}
+			// If right side has more nodes 
+			else if(this.root.rightWidth > startingPoint) {
 				startingPoint = Math.max(this.root.leftWidth, 2 * startingPoint - this.root.rightWidth);
 			}
 			
 			// Assign new positions
 			root.updatePositions(startingPoint, START_Y);
 			
-			this.setNewPositions(root.left, startingPoint, START_Y + DELTA_Y, -1, startingPoint - DIST, START_Y + K, root.leftEdge);				
-			this.setNewPositions(root.right, startingPoint, START_Y + DELTA_Y, 1, startingPoint + DIST, START_Y + K, root.rightEdge);
+			// First set to the left subtree
+			this.setNewPositions(root.left, startingPoint, START_Y + DELTA_Y, (byte)-1, startingPoint - DIST, START_Y + K, root.leftEdge);		
+			// Then set new positions to right subtree		
+			this.setNewPositions(root.right, startingPoint, START_Y + DELTA_Y, (byte)1, startingPoint + DIST, START_Y + K, root.rightEdge);
 		}
 	}
 
-	/*
+	/**
 	 * Method for updating the centers of circle with new positions 
-	 * */
-	private void setNewPositions(BSTNode node, double xPosition, double yPosition, int side, double lineStartX, double lineStartY, Line line) {
+	 * @param node		 : Cureent node whose position has to be updatesd
+	 * @param xPosition  : New x-coordinate of center of circle of node
+	 * @param yPosition  : New y-coordinate of center of circle of node
+	 * @param side		 : To determine which side we are currently
+	 * @param lineStartX : Starting x-coordinate of line
+	 * @param lineStartY : Starting y-coordinate of line
+	 * @param line		 : Edge of parent to child
+	 */
+	private void setNewPositions(BSTNode node, double xPosition, double yPosition, byte side, double lineStartX, double lineStartY, Line line) {
 	    if (node == null) {
 	        return;
 	    }
@@ -344,10 +427,16 @@ public class BinarySearchTree {
 	    
 
 	    // Recursively set positions for left and right children
-	    setNewPositions(node.left, xPosition, yPosition + DELTA_Y, -1, xPosition - DIST, yPosition + K, node.leftEdge);
-	    setNewPositions(node.right, xPosition, yPosition + DELTA_Y, 1, xPosition + DIST, yPosition + K, node.rightEdge);
+	    setNewPositions(node.left, xPosition, yPosition + DELTA_Y, (byte)-1, xPosition - DIST, yPosition + K, node.leftEdge);
+	    setNewPositions(node.right, xPosition, yPosition + DELTA_Y, (byte)1, xPosition + DIST, yPosition + K, node.rightEdge);
 	}
 	
+
+	/**
+	 * Method to calculate the {@code leftWidth} and {@code rightWidth} of all the nodes 
+	 * @param node 
+	 * @return the left and right width of current node
+	 */
 	private double resizeWidths(BSTNode node) {
 		if (node == null) {
 			return 0;
@@ -361,34 +450,46 @@ public class BinarySearchTree {
 		return node.leftWidth + node.rightWidth;
 	}
 
+
+	/**
+	 * Utitlity method to search for a value in a tree.
+	 * @param root 		: Root node of tree 
+	 * @param val	    : Value to be saerched in Tree
+	 * @param timeline  : To show the animation of glow
+	 * @param delay		: To make delay after each node
+	 * @return {@code true} if the value is present else {@code false}
+	 */
 	private boolean utilSearch(BSTNode root, int val, Timeline timeline, Duration[] delay) {
 		if(root == null) {
+			// return false - value is not present
 			return false;
 		}
 		
 		if(val == root.value) {
-			
+			// Value found
 			highlightNode(root, delay[0], timeline, Color.GREEN);
 			delay[0] = delay[0].add(Duration.seconds(2));
 			return true;
 		} else if(val > root.value) {
-			
+			// If the value is greater than current node value, then check right subtree 
 			highlightNode(root, delay[0], timeline, Color.RED);
 			delay[0] = delay[0].add(Duration.seconds(2));
 			return utilSearch(root.right, val, timeline, delay);
 		} else {
-			
+			// If the value is lesser than current node value, then check left subtree 
 			highlightNode(root, delay[0], timeline, Color.RED);
 			delay[0] = delay[0].add(Duration.seconds(2));
 			return utilSearch(root.left, val, timeline, delay);
 		}
 	}
 	
-	
-	
-	/*
-	 * Utility method for deleting a node from BST
-	 * */
+	/**
+	 * Utility method for deleting a node from Tree
+	 * @param node : Root node of Tree
+	 * @param val  : Value which needs to be deleted from tree
+	 * @param line : Line which needs to be removed after deleting a node
+	 * @return
+	 */
 	private BSTNode utilRemove(BSTNode node, int val, Line line) {
 		if(node == null) {
 			Controller.showAlert(val + " is not present in BST.", "Value not present", AlertType.INFORMATION);
@@ -396,35 +497,38 @@ public class BinarySearchTree {
 		}
 		
 		if(val > node.value) {
+		// If the value is greater than current node value, then check right subtree 
 			node.right = utilRemove(node.right, val, node.rightEdge);
 		} else if(val < node.value) {
+		// If the value is lesser than current node value, then check left subtree 
 			node.left = utilRemove(node.left, val, node.leftEdge);
-//			return node;
 		} else {
+		// If the current node value is same as value - node found
+
 			// When node to be removed is leaf node
 			if(node.right == null && node.left == null) {
-				this.nodeDisappearance(node);
+				this.nodeDisappearance(node); // Play animation of node disappearance
 				if(line != null) {
-					line.setStrokeWidth(0);					
+					line.setStrokeWidth(0);	  // Make line invisible 
 				}
 				return null;
 			}
-			// When node to be removed has one child node - at left
+
+			// When node to be removed has one child node - only at left
 			else if(node.right == null) {
-//				deleteNodeVisuallyWithOneChild(node, node.left, true, line);
-				this.nodeDisappearance(node);
+				this.nodeDisappearance(node);	// Play animation of node disappearance
 				if(line != null) {
-					line.setStrokeWidth(0);					
+					line.setStrokeWidth(0);	    // Make line invisible				
 				}
 				node.leftEdge.setStrokeWidth(0);
 				return node.left;
 			}
-			// When node to be removed has one child node - at right
+			// When node to be removed has one child node - only at right
 			else if(node.left == null) {
 				
-				this.nodeDisappearance(node);
+				this.nodeDisappearance(node);	// Play animation of node disappearance
 				if(line != null) {
-					line.setStrokeWidth(0);					
+					line.setStrokeWidth(0);		// Make line invisible			
 				}
 				node.rightEdge.setStrokeWidth(0);
 				return node.right;
@@ -436,18 +540,23 @@ public class BinarySearchTree {
 				Duration delay = Duration.seconds(1);
 				Timeline timeline = new Timeline();
 				
+				// Looke for largest value in left subtree of current node
 				while(inorderPredecessor.right != null) {
 					highlightNode(inorderPredecessor, delay, timeline, Color.GREEN);
 					inorderPredecessor = inorderPredecessor.right;
 					
 					delay = delay.add(Duration.seconds(2));
 				}
-				highlightNode(inorderPredecessor, delay, timeline, Color.RED);
+				highlightNode(inorderPredecessor, delay, timeline, Color.RED); 
 				delay = delay.add(Duration.seconds(2));
 				
-				
+				// Change the value of node which has to be deleted by it's inorder predecessor
 				node.value = inorderPredecessor.value;
+
+				// When animation get finished
 				timeline.setOnFinished(event -> {
+
+					// Animation for fading of text
 					FadeTransition ft = new FadeTransition(Duration.seconds(1), node.text);
 					ft.setFromValue(1.0);
 					ft.setToValue(0.0);
@@ -455,6 +564,8 @@ public class BinarySearchTree {
 					ft.setOnFinished(event2 -> {
 						node.text.setText(String.valueOf(node.value));
 						node.text.setOpacity(1);
+
+						// Animation for text appearing 
 						ScaleTransition textAppearance = new ScaleTransition(Duration.seconds(1), node.text);
 						textAppearance.setFromX(0.0);
 						textAppearance.setToX(1);
@@ -463,11 +574,11 @@ public class BinarySearchTree {
 						textAppearance.play();
 						
 					});
-					ft.play();
-					
+					ft.play(); 
 					
 					PauseTransition pt = new PauseTransition(Duration.seconds(1));
 					
+					// After 1 second of pause
 					pt.setOnFinished(event2 -> {
 						node.left = utilRemove(node.left, node.value, node.leftEdge);	
 						resizeTree();
@@ -480,11 +591,11 @@ public class BinarySearchTree {
 		return node;
 	}
 	
-	    
 
-	/*
-	 * Method for showing disappearance of node
-	 * */
+	 /**
+	  * Method for showing disappearance of node
+	  * @param node : The node which has to be show disappeared
+	  */
 	private void nodeDisappearance(BSTNode node) {
 		ScaleTransition nodeDisappear = new ScaleTransition(Duration.seconds(1), node.circle);
         nodeDisappear.setFromX(1);
@@ -508,27 +619,34 @@ public class BinarySearchTree {
 	}
 	
 
-	
-	/*
-	 * Utility method for in-order traversal of binary search tree
-	 * */
+	 /**
+	  * Utility method for in-order traversal of binary search tree
+	  * @param root		 : Root node of tree
+	  * @param timeline  : To show the animation of glow
+	  * @param delay	 : To make delay after each node
+	  * @param trav      : ArrayList for storing node value
+	  */
 	private void utilInorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
 		if(root == null) {
 			return;
 		}
 		
-		utilInorder(root.left, timeline, delay, trav);
+		utilInorder(root.left, timeline, delay, trav); // Visit left subtree first
 		
 		trav.add(root.value);
 		highlightNode(root, delay[0], timeline, Color.RED);
 		delay[0] = delay[0].add(Duration.seconds(2));
 		
-		utilInorder(root.right, timeline, delay, trav);
+		utilInorder(root.right, timeline, delay, trav); // Then visit right subtree
 	}
 	
-	/*
-	 * 
-	 * */
+	/**
+	  * Utility method for pre-order traversal of binary search tree
+	  * @param root		 : Root node of tree
+	  * @param timeline  : To show the animation of glow
+	  * @param delay	 : To make delay after each node
+	  * @param trav      : ArrayList for storing node value
+	  */
 	private void utilPreorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
 		if(root == null) {
 			return;
@@ -537,34 +655,53 @@ public class BinarySearchTree {
 		trav.add(root.value);
 		highlightNode(root, delay[0], timeline, Color.RED);
 		delay[0] = delay[0].add(Duration.seconds(2));
-		utilPreorder(root.left, timeline, delay, trav);
-		utilPreorder(root.right, timeline, delay, trav);
+
+		utilPreorder(root.left, timeline, delay, trav);		// Visit left subtree first
+		utilPreorder(root.right, timeline, delay, trav);	// Then visit right subtree first
 	}
 	
-	/*
-	 * 
-	 * */
+	/**
+	  * Utility method for Post-order traversal of binary search tree
+	  * @param root		 : Root node of tree
+	  * @param timeline  : To show the animation of glow
+	  * @param delay	 : To make delay after each node
+	  * @param trav      : ArrayList for storing node value
+	  */
 	private void utilPostorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
 		if(root == null) {
 			return;
 		}
-		utilPostorder(root.left, timeline, delay, trav);
-		utilPostorder(root.right, timeline, delay, trav);
+		utilPostorder(root.left, timeline, delay, trav);   // Visit left subtree first
+		utilPostorder(root.right, timeline, delay, trav);  // Then visit right subtree first
 		
 		trav.add(root.value);
 		highlightNode(root, delay[0], timeline, Color.RED);
 		delay[0] = delay[0].add(Duration.seconds(2));
 	}
 	
+
+	/**
+	  * Utility method for level-order traversal of binary search tree
+	  * @param root		 : Root node of tree
+	  * @param timeline  : To show the animation of glow
+	  * @param delay	 : To make delay after each node
+	  * @param trav      : ArrayList for storing node value
+	  */
 	private void utilLevelorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<ArrayList<Integer>> trav) {
+		// Using BFS for level-order traversal
 		Queue<BSTNode> q = new LinkedList<>();
 		
+		// Process root node
 		q.add(root);
+
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		temp.add(root.value);
 		trav.add(temp);
+
 		highlightNode(root, delay[0], timeline, Color.RED);
 		delay[0] = delay[0].add(Duration.seconds(2));
+
+		// Perform BFS
 		while(!q.isEmpty()) {
 			
 			int k = q.size();
@@ -575,6 +712,7 @@ public class BinarySearchTree {
 				if(node.left != null) {
 					temp.add(node.left.value);
 					q.add(node.left);
+
 					highlightNode(node.left, delay[0], timeline, Color.RED);
 					delay[0] = delay[0].add(Duration.seconds(2));
 				}
@@ -592,9 +730,13 @@ public class BinarySearchTree {
 	}
 	
 	
-	/*
-	 * Method for showing current node highlighted
-	 * */
+	 /**
+	  * Method to show current node highlighted 
+	  * @param root     : Node which need to be highlighted
+	  * @param delay	: To make delay after each node
+	  * @param timeline : To show the animation of glow
+	  * @param color    : Color of boreder effect
+	  */
 	private void highlightNode(BSTNode root, Duration delay, Timeline timeline, Color color) {
 		KeyFrame glowFrame = new KeyFrame(
 				delay,
@@ -610,6 +752,12 @@ public class BinarySearchTree {
 	}
 	
 	
+	/**
+	 * Method for making label for traversals
+	 * @param trav : Traversal series
+	 * @param head : It's heading like, inorder, preorder, postorder..
+	 * @return
+	 */
 	private String makeLabel(ArrayList<Integer> trav, String head) {
 		StringBuilder ans = new StringBuilder(head + "\n");
 		
@@ -618,18 +766,22 @@ public class BinarySearchTree {
 		}
 		return String.valueOf(ans);
 	}
-	/*
-	 * for glow effect
-	 * */
+
+	/**
+	 * Method for showing glow effect
+	 * @param node  : Node which needs to be show as glow effect on Stroke 
+	 * @param color : Color of glow
+	 */
 	private void applyGlowEffect(BSTNode node, Color color) {
         node.circle.setStroke(color);
         Glow glow = new Glow(1.0);
         node.circle.setEffect(glow);
     }
 	
-	/*
+	/**
 	 * For resetting the style of node
-	 * */
+	 * @param root
+	 */
 	private void resetNodeEffect(BSTNode root) {
 		root.circle.setStroke(Color.BLACK);
 		root.circle.setEffect(null);

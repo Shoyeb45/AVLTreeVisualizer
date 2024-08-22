@@ -26,6 +26,10 @@ public class Controller implements Initializable {
 	
 	@FXML
 	private Label myLabel;
+
+	/**
+	 * Method for inserting value in Tree
+	 */
 	public void insertInBST() {
 		try {
 			bst.insert(Integer.parseInt(rootVal.getText())); // Calling insert function in bst
@@ -35,6 +39,9 @@ public class Controller implements Initializable {
 		}
 	}	
 	
+	/**
+	 * Method for searching value in Tree
+	 */
 	public void searchInBST() {
 		try {
 			bst.search(Integer.parseInt(rootVal.getText())); // Calling search function in binary search tree
@@ -44,6 +51,9 @@ public class Controller implements Initializable {
 		}
 	}
 	
+	/**
+	 * Method for deleting value in Tree
+	 */
 	public void deleteInBST() {
 		try {
 			bst.remove(Integer.parseInt(rootVal.getText())); // Calling search function in binary search tree
@@ -56,46 +66,58 @@ public class Controller implements Initializable {
 	}
 
 	@Override
+	/**
+	 * For initializing tree
+	 * @param arg0
+	 * @param arg1
+	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		bst = new BinarySearchTree(pane); // initializing empty bst
 	}
 	
-	/*
+	/**
 	 * Method associated with inorder button
-	 * */
+	 */
 	public void inorder() {
 		bst.inorder(myLabel);
 	}
 	
-	/*
+	/**
 	 * Method associated with preorder button
-	 * */
+	 */
 	public void preorder() {
 		bst.preorder(myLabel);
 	}
 	
-	/*
+	/**
 	 * Method associated with postorder button
-	 * */
+	 */
 	public void postorder() {
 		bst.postorder(myLabel);
 	}
-	
-	/*
+
+	/**
 	 * Method associated with levelorder button
-	 * */
+	 */
 	public void levelorder() {
 		bst.levelorder(myLabel);
 	}
 	
+
+	/**
+	 * Method for clearing pane 
+	 */
 	public void clearBST() {
 		pane.getChildren().clear(); // To clear all the circle and text
-		bst.clear(); // To empty the bst
+		bst.clear(); 			    // To empty the bst
 	}
-	
-	/*
+
+	/**
 	 * Method to create and show alert
-	 * */
+	 * @param msg   : Meassage to show on alert description
+	 * @param title : Title of alert box
+	 * @param type  : Type of alert box, like, ERROR, INFORMATION, WARNING
+	 */
 	public static void showAlert(String msg, String title, AlertType type) {
 		Alert alert = new Alert(type);
 		alert.setTitle(title);

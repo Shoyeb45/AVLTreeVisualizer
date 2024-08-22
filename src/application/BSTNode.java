@@ -9,14 +9,14 @@ import javafx.scene.text.Text;
 
 public class BSTNode {
 	
-	/*
+	/**
 	 * Constants
-	 * */
+	 */
 	public static final double RADIUS = 20; // Radius of node
 	
-	/*
+	/**
 	 * Attributes of BSTNode class
-	 * */
+	 */
 	public int value; 		  // To hold the data in node
 	public BSTNode left;      // To hold the left child of node
 	public BSTNode right;     // To hold the right child of node
@@ -27,27 +27,29 @@ public class BSTNode {
 	public Line rightEdge;    // Line to show the pointer between node and left sub-tree
 	public Line leftEdge;     // Line to show the pointer between node and right sub-tree
 	
-	
-	/*
+	/**
 	 * Constructor to initialize a BSTNode
-	 * */
+	 * @param data     : Value of the node
+	 * @param centerX  : x-coordinate of center of circle of node
+	 * @param centerY  : y-coordinate of center of circle of node
+	 */
 	BSTNode(int data, double centerX, double centerY) {
 		
-		value = data;						   // Assigning value to given value(data)
-		left = right = null;				   // Assigning left and right pointer to null
-		circle = new Circle(RADIUS);		   // Assigning new Circle object to circle with radius RADIUS
-		text = new Text(String.valueOf(data)); // Assigning new Text object to text with data value
-		leftWidth = rightWidth = 0;			   // For new node the left width and right width will be 0
-		rightEdge = new Line();				   // Assigning new Line object to rightEdge(i.e., edge connecting left and current node)
-		leftEdge = new Line();                 // Assigning new Line object to leftEdge(i.e., edge connecting right and current node)
+		value = data;						      // Assigning value to given value(data)
+		left = right = null;				      // Assigning left and right pointer to null
+		circle = new Circle(RADIUS);		      // Assigning new Circle object to circle with radius RADIUS
+		text = new Text(String.valueOf(data));    // Assigning new Text object to text with data value
+		leftWidth = rightWidth = 0;			      // For new node the left width and right width will be 0
+		rightEdge = new Line();				      // Assigning new Line object to rightEdge(i.e., edge connecting left and current node)
+		leftEdge = new Line();                    // Assigning new Line object to leftEdge(i.e., edge connecting right and current node)
 		
 		
 		// circle :-
-		circle.setCenterX(centerX);           // Setting x-coordinate of center
-		circle.setCenterY(centerY);			  // Setting y-coordinate of center	
-		circle.setStroke(Color.BLACK);        // Setting stroke color to black of circle
-		circle.setStrokeWidth(2);             // Setting stroke width of circle
-		circle.setFill(Color.LIGHTBLUE);      // Setting background color of circle
+		circle.setCenterX(centerX);           	  // Setting x-coordinate of center
+		circle.setCenterY(centerY);			  	  // Setting y-coordinate of center	
+		circle.setStroke(Color.BLACK);        	  // Setting stroke color to black of circle
+		circle.setStrokeWidth(2);             	  // Setting stroke width of circle
+		circle.setFill(Color.LIGHTBLUE);      	  // Setting background color of circle
 		
 		// text :- 
 		Bounds bounds = text.getBoundsInLocal();  // Getting bound parameters for setting the text in center of circle
@@ -58,9 +60,11 @@ public class BSTNode {
         
 	}
 	
-	/*
+	/**
 	 * Method for updating positions with new coordinates-(x, y)
-	 * */
+	 * @param x : x-coordinate of center of circle of node
+	 * @param y : y-coordinate of center of circle of node
+	 */
 	public void updatePositions(double x, double y) {
 		this.circle.setCenterX(x);   // Set new x-coordinate
 		this.circle.setCenterY(y);   // Set new y-coordinate
@@ -89,10 +93,18 @@ public class BSTNode {
         rightEdge.setStrokeWidth(0);
 	}
 	
+	/**
+	 * Method to make line visible
+	 * @param line : Line which needs to be made visible
+	 */
 	public static void showLine(Line line) {
 		line.setStrokeWidth(2);
 	}
 	
+	/**
+	 * Method for adding left and right edge of node to the pane
+	 * @param pane : Pane which will hold the Tree
+	 */
 	public void addLineToPane(Pane pane) {
 		pane.getChildren().addAll(this.rightEdge, this.leftEdge);
 	}

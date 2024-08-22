@@ -14,14 +14,14 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml")); // Loading FXML File
 			Parent root = loader.load();
 			Scene scene = new Scene(root); // Adding it to scene
-			stage.setScene(scene);
-			stage.show();
+			stage.setScene(scene);   // Set scene on stage
+			stage.show();  // Show scene
 		} catch(Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(); // Handle exceptions
 		}
 	}
 	
 	public static void main(String[] args) {
-		launch(args);
+		launch(args); // launch through main method
 	}
 }
