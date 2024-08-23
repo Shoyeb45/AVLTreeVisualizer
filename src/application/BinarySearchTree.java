@@ -68,7 +68,7 @@ public class BinarySearchTree {
 		}
 
 		if(!this.contains(this.root, val)) {
-			insertUtil(this.root, val, root.circle.getCenterX(), root.circle.getCenterY(), false); // Helper method to insert the new value
+			root = insertUtil(this.root, val, root.circle.getCenterX(), root.circle.getCenterY(), false); // Helper method to insert the new value
 			resizeTree(); // For visually balancing the binary search Tree
 		} else {
 			Controller.showAlert(val + " is already present is binary search tree.", "Duplicate value found", AlertType.INFORMATION);
@@ -317,17 +317,125 @@ public class BinarySearchTree {
 		if(root.value < val) {
 			// visit right Subtree
 			root.right = insertUtil(root.right, val, root.circle.getCenterX(), root.circle.getCenterY(), false);  
-		} else if(root.value > val) {
+		} 
+		else {
 			// Visit left subtree
 			root.left = insertUtil(root.left, val, root.circle.getCenterX(), root.circle.getCenterY(), true); 
-		} else {
-			// If the element is already present in binary search tree
-			return root;
 		}
-		return root;
+		
+		this.updateNode(root);
+		
+		return this.balanceTree(root);
 	}
 	
-
+	/**
+	 * Method for updating height and balancing factor of binary search tree
+	 */
+	private void updateNode(BSTNode node) {
+		int leftHeight = -1, rightHeight = -1;
+		if(node.left != null) {
+			leftHeight = node.left.height;
+		}
+		
+		if(node.right != null) {
+			rightHeight = node.right.height;
+		}
+		
+		node.height = 1 + Math.max(leftHeight, rightHeight);
+		node.balancingFactor = rightHeight - leftHeight;
+	}
+	
+	
+	/**
+	 * Method for balancing the binary search tree
+	 */
+	private BSTNode balanceTree(BSTNode node) {
+		
+		// Left subtree has more nodes
+		if(node.balancingFactor == -2) {
+			// Left-Left Case
+			if(node.left.balancingFactor < 0) {
+				return this.leftLeftCase(node);
+			} 
+			// Left-Right case
+			else {
+				return this.leftRightCase(node);
+			}
+		}
+		
+		// Right subtree has more nodes
+		else if(node.balancingFactor == 2) {
+			// Right-Right Case
+			if(node.right.balancingFactor > 0) {
+				return this.rightRightCase(node);
+			} 
+			// rightLeftCase			
+			else {
+				return this.rightLeftCase(node);
+			}
+		}
+		return node;
+	}
+	
+	/**
+	 * Method to handle left-left un-balancing case
+	 */ 
+	private BSTNode leftLeftCase(BSTNode node) {
+		return rightRotate(node);
+	}
+	
+	/**
+	 * Method to handle left-right un-balancing case
+	 */
+	private BSTNode leftRightCase(BSTNode node) {
+		node.left = this.rightRotate(node.left);
+		return leftLeftCase(node);
+	}
+	
+	/**
+	 * Method to handle right-right un-balancing case
+	 */
+	private BSTNode rightRightCase(BSTNode node) {
+		return leftRotate(node);
+	}
+	
+	/**
+	 * Method to handle right-left un-balancing case
+	 */
+	private BSTNode rightLeftCase(BSTNode node) {
+		node.right = this.leftRotate(node.right);
+		return rightRightCase(node);
+	}
+	
+	/**
+	 * Method to perform right rotation
+	 */
+	private BSTNode rightRotate(BSTNode node) {
+		BSTNode child = node.left;
+		node.left = child.right;
+		child.right = node;
+		
+		// Update the re-positioned nodes
+		this.updateNode(node);
+		this.updateNode(child);
+		
+		return child;
+	}
+	
+	/**
+	 * Method to perform left rotation
+	 */
+	private BSTNode leftRotate(BSTNode node) {
+		BSTNode child = node.right;
+		node.right = child.left;
+		child.left = node;
+		
+		// Update the re-positioned nodes
+		this.updateNode(node);
+		this.updateNode(child);
+				
+		return child;
+	}
 	/**
 	 * Method for animation of node appearance at insertion
 	 * @param newNode : node to show the appearance animation
@@ -540,7 +648,7 @@ public class BinarySearchTree {
 				Duration delay = Duration.seconds(1);
 				Timeline timeline = new Timeline();
 				
-				// Looke for largest value in left subtree of current node
+				// Look for largest value in left subtree of current node
 				while(inorderPredecessor.right != null) {
 					highlightNode(inorderPredecessor, delay, timeline, Color.GREEN);
 					inorderPredecessor = inorderPredecessor.right;

@@ -26,6 +26,8 @@ public class BSTNode {
 	public Text text; 		  // Text object for enclosing the value inside the circle
 	public Line rightEdge;    // Line to show the pointer between node and left sub-tree
 	public Line leftEdge;     // Line to show the pointer between node and right sub-tree
+	public int height;		  // Height of current node
+	public int balancingFactor; // Balancing factor of node: defined as rightHeight-leftHeight
 	
 	/**
 	 * Constructor to initialize a BSTNode
