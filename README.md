@@ -1,6 +1,6 @@
-# Java Application for Binary Search Tree Visualization
+# Java Application for AVL Tree Visualization
 
-### What is BST?
+### What is AVL Tree?
 
 - 
 
