@@ -20,46 +20,46 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
-public class BinarySearchTree {
+public class AVLTree {
 	
 	/**
 	 * Constant Values
 	 */
-	public final static int START_Y = 50; // Initial coordinate of binary search tree node in y-axis 
+	public final static int START_Y = 50; // Initial coordinate of AVL tree node in y-axis 
     public final static int DELTA_X = 50; // Horizontal spacing
     public final static int DELTA_Y = 50; // Vertical spacing between levels
 	public final static double K = 13;    // Distance of chord from center, to calculate the start of edges
-	public final static double DIST = Math.sqrt(Math.pow(BSTNode.RADIUS, 2) - Math.pow(K, 2));  // Distance of line from the edge point starting to perpendicular bisector
+	public final static double DIST = Math.sqrt(Math.pow(AVLNode.RADIUS, 2) - Math.pow(K, 2));  // Distance of line from the edge point starting to perpendicular bisector
 	
 	
 	/**
-	 * Attributes of Binary Search Tree Class
+	 * Attributes of AVL Tree Class
 	 */
 	public double startX;
-	public BSTNode root; 
-	public BSTNode lastNode;
+	public AVLNode root; 
+	public AVLNode lastNode;
 	public Pane pane;
 
 	/**
 	 * Constructor sets root to null and initializes pane
 	 * @param newPane : pane for holding Tree
 	 */
-	BinarySearchTree(Pane newPane) {
+	AVLTree(Pane newPane) {
 		pane = newPane;
 		root = null;
 	}
 	
 	/**
-	 * Method to insert the value in binary search tree
+	 * Method to insert the value in AVL tree
 	 * @param val : value that needs to be inserted in Tree
 	 * @return none
 	 */
 	public void insert(int val) {
 		
-		// When binary search tree is empty
+		// When AVL tree is empty
 		if(root == null) { 
 			this.startX = pane.getWidth() / 2; // At middle of pane
-			BSTNode newNode = new BSTNode(val, startX,  START_Y); // insert at the center of the pane
+			AVLNode newNode = new AVLNode(val, startX,  START_Y); // insert at the center of the pane
 			root = newNode;
 			pane.getChildren().addAll(newNode.circle, newNode.text); // Add node to pane
 			root.addLineToPane(pane); // Add both the left and right lines to pane
@@ -69,9 +69,9 @@ public class BinarySearchTree {
 
 		if(!this.contains(this.root, val)) {
 			root = insertUtil(this.root, val, root.circle.getCenterX(), root.circle.getCenterY(), false); // Helper method to insert the new value
-			resizeTree(); // For visually balancing the binary search Tree
+			resizeTree(); // For visually balancing the AVL Tree
 		} else {
-			Controller.showAlert(val + " is already present is binary search tree.", "Duplicate value found", AlertType.INFORMATION);
+			Controller.showAlert(val + " is already present is AVL tree.", "Duplicate value found", AlertType.INFORMATION);
 		}
 	}
 	
@@ -87,14 +87,14 @@ public class BinarySearchTree {
 		// value is found
 		if(this.utilSearch(root, val, timeline, delay)) {
 			timeline.setOnFinished(event -> {
-				Controller.showAlert(val + " found in binary search tree", "Value found", AlertType.CONFIRMATION);
+				Controller.showAlert(val + " found in AVL tree", "Value found", AlertType.CONFIRMATION);
 			});
 			timeline.play();
 		} 
 		// value not found
 		else {
 			timeline.setOnFinished(event -> {
-				Controller.showAlert(val + " not found in binary search tree", "Value not found", AlertType.INFORMATION);
+				Controller.showAlert(val + " not found in AVL tree", "Value not found", AlertType.INFORMATION);
 			});
 			timeline.play();
 		}
@@ -111,7 +111,7 @@ public class BinarySearchTree {
 
 		// If the Tree is empty
 		if(root == null) {
-			Controller.showAlert("Cannot delete from an empty binary search tree", "Empty BST", AlertType.WARNING);
+			Controller.showAlert("Cannot delete from an empty AVL tree", "Empty AVL", AlertType.WARNING);
 			return;
 		} else {
 			root = this.utilRemove(this.root, val, null);
@@ -131,7 +131,7 @@ public class BinarySearchTree {
 
 		// If tree is empty
 		if(root == null) {
-			Controller.showAlert("Can't perform inorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
+			Controller.showAlert("Can't perform inorder traversal because AVL tree is empty", "AVL is empty", AlertType.INFORMATION);
 			return;
 		}
 		
@@ -162,7 +162,7 @@ public class BinarySearchTree {
 
 		// If tree is empty
 		if(root == null) {
-			Controller.showAlert("Can't perform preorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
+			Controller.showAlert("Can't perform preorder traversal because AVL tree is empty", "AVL is empty", AlertType.INFORMATION);
 			return;
 		}
 
@@ -190,7 +190,7 @@ public class BinarySearchTree {
 
 		// If tree is empty
 		if(root == null) {
-			Controller.showAlert("Can't perform postorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
+			Controller.showAlert("Can't perform postorder traversal because AVL tree is empty", "AVL is empty", AlertType.INFORMATION);
 			return;
 		}
 
@@ -218,7 +218,7 @@ public class BinarySearchTree {
 
 		// If tree is empty
 		if(root == null) {
-			Controller.showAlert("Can't perform postorder traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
+			Controller.showAlert("Can't perform postorder traversal because AVL tree is empty", "AVL is empty", AlertType.INFORMATION);
 			return;
 		}
 
@@ -265,7 +265,7 @@ public class BinarySearchTree {
 	 */
 	public void dfs(Label label) {
 		if(root == null) {
-			Controller.showAlert("Can't perform dfs traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
+			Controller.showAlert("Can't perform dfs traversal because AVL tree is empty", "AVL is empty", AlertType.INFORMATION);
 			return;
 		}
 		// ArrayList for storing the values
@@ -285,17 +285,17 @@ public class BinarySearchTree {
 	}
 	
 	/**
-	 * Method for clearing binary search tree
+	 * Method for clearing AVL tree
 	 * */
 	public void clear() {
 		root = null;
 	}
 
 	/**
-	 * Private method for checking if the node is present in Binary Search Tree or not
+	 * Private method for checking if the node is present in AVL Tree or not
 	 * @param root,val 
 	 */
-	private boolean contains(BSTNode root, int val) {
+	private boolean contains(AVLNode root, int val) {
 		if(root == null) {
 			return false;
 		}
@@ -316,13 +316,13 @@ public class BinarySearchTree {
 	  * @param centerX : x-coordinate of center of circle of current node
 	  * @param centerY : y-coordinate of center of circle of current node
 	  * @param isLeft  : boolean value to determine the left or right subtree of node to be inserted  
-	  * @return BSTNode
+	  * @return AVLNode
 	  */
-	private BSTNode insertUtil(BSTNode root, int val, double centerX, double centerY, boolean isLeft) {
+	private AVLNode insertUtil(AVLNode root, int val, double centerX, double centerY, boolean isLeft) {
 		
 		if(root == null) {
 			double newCenterX, newCenterY = centerY + DELTA_Y;  // Center of new node
-			BSTNode newNode;
+			AVLNode newNode;
 			
 			if(isLeft) {
 				newCenterX = centerX - DELTA_X; // Insert the node at left side of parent node
@@ -330,7 +330,7 @@ public class BinarySearchTree {
 				newCenterX = centerX + DELTA_X; // Insert the node at right side of parent node
 			}
 			
-			newNode = new BSTNode(val, newCenterX, newCenterY);      // Creating new node
+			newNode = new AVLNode(val, newCenterX, newCenterY);      // Creating new node
 			pane.getChildren().addAll(newNode.circle, newNode.text); // Add to the pane
 			nodeAppearance(newNode);								 // Call function to show the node appearance animation
 			newNode.addLineToPane(pane);							 // Add line to the pane
@@ -354,9 +354,9 @@ public class BinarySearchTree {
 	}
 	
 	/**
-	 * Method for updating height and balancing factor of binary search tree
+	 * Method for updating height and balancing factor of AVL tree
 	 */
-	private void updateNode(BSTNode node) {
+	private void updateNode(AVLNode node) {
 		int leftHeight = -1, rightHeight = -1;
 		if(node.left != null) {
 			leftHeight = node.left.height;
@@ -372,9 +372,9 @@ public class BinarySearchTree {
 	
 	
 	/**
-	 * Method for balancing the binary search tree
+	 * Method for balancing the AVL tree
 	 */
-	private BSTNode balanceTree(BSTNode node) {
+	private AVLNode balanceTree(AVLNode node) {
 		
 		// Left subtree has more nodes
 		if(node.balancingFactor == -2) {
@@ -405,14 +405,14 @@ public class BinarySearchTree {
 	/**
 	 * Method to handle left-left un-balancing case
 	 */ 
-	private BSTNode leftLeftCase(BSTNode node) {
+	private AVLNode leftLeftCase(AVLNode node) {
 		return rightRotate(node);
 	}
 	
 	/**
 	 * Method to handle left-right un-balancing case
 	 */
-	private BSTNode leftRightCase(BSTNode node) {
+	private AVLNode leftRightCase(AVLNode node) {
 		node.left = this.leftRotate(node.left);
 		return leftLeftCase(node);
 	}
@@ -420,14 +420,14 @@ public class BinarySearchTree {
 	/**
 	 * Method to handle right-right un-balancing case
 	 */
-	private BSTNode rightRightCase(BSTNode node) {
+	private AVLNode rightRightCase(AVLNode node) {
 		return leftRotate(node);
 	}
 	
 	/**
 	 * Method to handle right-left un-balancing case
 	 */
-	private BSTNode rightLeftCase(BSTNode node) {
+	private AVLNode rightLeftCase(AVLNode node) {
 		node.right = this.rightRotate(node.right);
 		return rightRightCase(node);
 	}
@@ -435,8 +435,8 @@ public class BinarySearchTree {
 	/**
 	 * Method to perform right rotation
 	 */
-	private BSTNode rightRotate(BSTNode node) {
-		BSTNode child = node.left;
+	private AVLNode rightRotate(AVLNode node) {
+		AVLNode child = node.left;
 		node.left = child.right;
 		child.right = node;
 		
@@ -450,8 +450,8 @@ public class BinarySearchTree {
 	/**
 	 * Method to perform left rotation
 	 */
-	private BSTNode leftRotate(BSTNode node) {
-		BSTNode child = node.right;
+	private AVLNode leftRotate(AVLNode node) {
+		AVLNode child = node.right;
 		node.right = child.left;
 		child.left = node;
 		
@@ -465,7 +465,7 @@ public class BinarySearchTree {
 	 * Method for animation of node appearance at insertion
 	 * @param newNode : node to show the appearance animation
 	 */
-	private void nodeAppearance(BSTNode newNode) {
+	private void nodeAppearance(AVLNode newNode) {
 		ScaleTransition nodeAppearance = new ScaleTransition(Duration.seconds(0.5), newNode.circle);
         nodeAppearance.setFromX(0.1);
         nodeAppearance.setToX(1);
@@ -531,7 +531,7 @@ public class BinarySearchTree {
 	 * @param lineStartY : Starting y-coordinate of line
 	 * @param line		 : Edge of parent to child
 	 */
-	private void setNewPositions(BSTNode node, double xPosition, double yPosition, byte side, double lineStartX, double lineStartY, Line line) {
+	private void setNewPositions(AVLNode node, double xPosition, double yPosition, byte side, double lineStartX, double lineStartY, Line line) {
 	    if (node == null) {
 	        return;
 	    }
@@ -548,14 +548,14 @@ public class BinarySearchTree {
 	    node.updatePositions(xPosition, yPosition);
 	    
 	    // make lines visible
-	    BSTNode.showLine(line);
+	    AVLNode.showLine(line);
 	    
 	    // Show animation for growing line from start -> end, only for newly inserted node    
 	    if(node == lastNode) {
-	    	lineGrowing(line, xPosition, yPosition - BSTNode.RADIUS);	    	
+	    	lineGrowing(line, xPosition, yPosition - AVLNode.RADIUS);	    	
 	    } else {
 	    	line.setEndX(xPosition);
-	    	line.setEndY(yPosition - BSTNode.RADIUS);
+	    	line.setEndY(yPosition - AVLNode.RADIUS);
 	    }
 	    
 
@@ -570,7 +570,7 @@ public class BinarySearchTree {
 	 * @param node 
 	 * @return the left and right width of current node
 	 */
-	private double resizeWidths(BSTNode node) {
+	private double resizeWidths(AVLNode node) {
 		if (node == null) {
 			return 0;
 		}
@@ -592,7 +592,7 @@ public class BinarySearchTree {
 	 * @param delay		: To make delay after each node
 	 * @return {@code true} if the value is present else {@code false}
 	 */
-	private boolean utilSearch(BSTNode root, int val, Timeline timeline, Duration[] delay) {
+	private boolean utilSearch(AVLNode root, int val, Timeline timeline, Duration[] delay) {
 		if(root == null) {
 			// return false - value is not present
 			return false;
@@ -623,9 +623,9 @@ public class BinarySearchTree {
 	 * @param line : Line which needs to be removed after deleting a node
 	 * @return
 	 */
-	private BSTNode utilRemove(BSTNode node, int val, Line line) {
+	private AVLNode utilRemove(AVLNode node, int val, Line line) {
 		if(node == null) {
-			Controller.showAlert(val + " is not present in BST.", "Value not present", AlertType.INFORMATION);
+			Controller.showAlert(val + " is not present in AVL.", "Value not present", AlertType.INFORMATION);
 			return node;
 		}
 		
@@ -668,7 +668,7 @@ public class BinarySearchTree {
 			}
 			// When node to be removed has two child nodes
 			else {
-				BSTNode inorderPredecessor = node.left;
+				AVLNode inorderPredecessor = node.left;
 				
 				Duration delay = Duration.seconds(1);
 				Timeline timeline = new Timeline();
@@ -733,7 +733,7 @@ public class BinarySearchTree {
 	  * Method for showing disappearance of node
 	  * @param node : The node which has to be show disappeared
 	  */
-	private void nodeDisappearance(BSTNode node) {
+	private void nodeDisappearance(AVLNode node) {
 		ScaleTransition nodeDisappear = new ScaleTransition(Duration.seconds(1), node.circle);
         nodeDisappear.setFromX(1);
         nodeDisappear.setFromX(1);
@@ -757,13 +757,13 @@ public class BinarySearchTree {
 	
 
 	 /**
-	  * Utility method for in-order traversal of binary search tree
+	  * Utility method for in-order traversal of AVL tree
 	  * @param root		 : Root node of tree
 	  * @param timeline  : To show the animation of glow
 	  * @param delay	 : To make delay after each node
 	  * @param trav      : ArrayList for storing node value
 	  */
-	private void utilInorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
+	private void utilInorder(AVLNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
 		if(root == null) {
 			return;
 		}
@@ -778,13 +778,13 @@ public class BinarySearchTree {
 	}
 	
 	/**
-	  * Utility method for pre-order traversal of binary search tree
+	  * Utility method for pre-order traversal of AVL tree
 	  * @param root		 : Root node of tree
 	  * @param timeline  : To show the animation of glow
 	  * @param delay	 : To make delay after each node
 	  * @param trav      : ArrayList for storing node value
 	  */
-	private void utilPreorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
+	private void utilPreorder(AVLNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
 		if(root == null) {
 			return;
 		}
@@ -798,13 +798,13 @@ public class BinarySearchTree {
 	}
 	
 	/**
-	  * Utility method for Post-order traversal of binary search tree
+	  * Utility method for Post-order traversal of AVL tree
 	  * @param root		 : Root node of tree
 	  * @param timeline  : To show the animation of glow
 	  * @param delay	 : To make delay after each node
 	  * @param trav      : ArrayList for storing node value
 	  */
-	private void utilPostorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
+	private void utilPostorder(AVLNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
 		if(root == null) {
 			return;
 		}
@@ -818,15 +818,15 @@ public class BinarySearchTree {
 	
 
 	/**
-	  * Utility method for level-order traversal of binary search tree
+	  * Utility method for level-order traversal of AVL tree
 	  * @param root		 : Root node of tree
 	  * @param timeline  : To show the animation of glow
 	  * @param delay	 : To make delay after each node
 	  * @param trav      : ArrayList for storing node value
 	  */
-	private void utilLevelorder(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<ArrayList<Integer>> trav) {
+	private void utilLevelorder(AVLNode root, Timeline timeline, Duration[] delay, ArrayList<ArrayList<Integer>> trav) {
 		// Using BFS for level-order traversal
-		Queue<BSTNode> q = new LinkedList<>();
+		Queue<AVLNode> q = new LinkedList<>();
 		
 		// Process root node
 		q.add(root);
@@ -845,7 +845,7 @@ public class BinarySearchTree {
 			temp = new ArrayList<Integer>();
 			
 			for(int i = 1; i <= k; i++) {
-				BSTNode node = q.poll();
+				AVLNode node = q.poll();
 				if(node.left != null) {
 					temp.add(node.left.value);
 					q.add(node.left);
@@ -867,13 +867,13 @@ public class BinarySearchTree {
 	}
 	
 	/**
-	  * Utility method for level-order traversal of binary search tree
+	  * Utility method for level-order traversal of AVL tree
 	  * @param root		 : Root node of tree
 	  * @param timeline  : To show the animation of glow
 	  * @param delay	 : To make delay after each node
 	  * @param trav      : ArrayList for storing node value
 	  */
-	private void utilDfs(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
+	private void utilDfs(AVLNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
 		trav.add(root.value);
 		this.highlightNode(root, delay[0], timeline, Color.RED);
 		delay[0] = delay[0].add(Duration.seconds(2));
@@ -897,7 +897,7 @@ public class BinarySearchTree {
 	  * @param timeline : To show the animation of glow
 	  * @param color    : Color of boreder effect
 	  */
-	private void highlightNode(BSTNode root, Duration delay, Timeline timeline, Color color) {
+	private void highlightNode(AVLNode root, Duration delay, Timeline timeline, Color color) {
 		KeyFrame glowFrame = new KeyFrame(
 				delay,
 				event -> applyGlowEffect(root, color)
@@ -932,7 +932,7 @@ public class BinarySearchTree {
 	 * @param node  : Node which needs to be show as glow effect on Stroke 
 	 * @param color : Color of glow
 	 */
-	private void applyGlowEffect(BSTNode node, Color color) {
+	private void applyGlowEffect(AVLNode node, Color color) {
         node.circle.setStroke(color);
         Glow glow = new Glow(1.0);
         node.circle.setEffect(glow);
@@ -942,7 +942,7 @@ public class BinarySearchTree {
 	 * For resetting the style of node
 	 * @param root
 	 */
-	private void resetNodeEffect(BSTNode root) {
+	private void resetNodeEffect(AVLNode root) {
 		root.circle.setStroke(Color.BLACK);
 		root.circle.setEffect(null);
 	}

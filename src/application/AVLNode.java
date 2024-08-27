@@ -7,7 +7,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
-public class BSTNode {
+public class AVLNode {
 	
 	/**
 	 * Constants
@@ -15,11 +15,11 @@ public class BSTNode {
 	public static final double RADIUS = 20; // Radius of node
 	
 	/**
-	 * Attributes of BSTNode class
+	 * Attributes of AVLNode class
 	 */
 	public int value; 		  // To hold the data in node
-	public BSTNode left;      // To hold the left child of node
-	public BSTNode right;     // To hold the right child of node
+	public AVLNode left;      // To hold the left child of node
+	public AVLNode right;     // To hold the right child of node
 	public Circle circle;     // Circle for enclosing the value inside it
 	public double leftWidth;  // To adjust according to number of nodes in left sub-tree
 	public double rightWidth; // To adjust according to number of nodes in left sub-tree
@@ -30,12 +30,12 @@ public class BSTNode {
 	public int balancingFactor; // Balancing factor of node: defined as rightHeight-leftHeight
 	
 	/**
-	 * Constructor to initialize a BSTNode
+	 * Constructor to initialize a AVLNode
 	 * @param data     : Value of the node
 	 * @param centerX  : x-coordinate of center of circle of node
 	 * @param centerY  : y-coordinate of center of circle of node
 	 */
-	BSTNode(int data, double centerX, double centerY) {
+	AVLNode(int data, double centerX, double centerY) {
 		
 		value = data;						      // Assigning value to given value(data)
 		left = right = null;				      // Assigning left and right pointer to null
@@ -81,16 +81,16 @@ public class BSTNode {
 		
 		// Set the coordinates of lines, the starting and ending position will be same to show the growing animation of line
 		// For left edge
-		leftEdge.setStartX(x - BinarySearchTree.DIST);
-        leftEdge.setStartY(y + BinarySearchTree.K);
-        leftEdge.setEndX(x - BinarySearchTree.DIST);
-        leftEdge.setEndY(y + BinarySearchTree.K);
+		leftEdge.setStartX(x - AVLTree.DIST);
+        leftEdge.setStartY(y + AVLTree.K);
+        leftEdge.setEndX(x - AVLTree.DIST);
+        leftEdge.setEndY(y + AVLTree.K);
         
         // For right edge
-        rightEdge.setStartX(x + BinarySearchTree.DIST);
-        rightEdge.setStartY(y + BinarySearchTree.K);
-        rightEdge.setEndX(x + BinarySearchTree.DIST);
-        rightEdge.setEndY(y + BinarySearchTree.K);
+        rightEdge.setStartX(x + AVLTree.DIST);
+        rightEdge.setStartY(y + AVLTree.K);
+        rightEdge.setEndX(x + AVLTree.DIST);
+        rightEdge.setEndY(y + AVLTree.K);
         leftEdge.setStrokeWidth(0);
         rightEdge.setStrokeWidth(0);
 	}

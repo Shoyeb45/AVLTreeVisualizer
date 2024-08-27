@@ -12,9 +12,9 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1469.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <TextField fx:id="rootVal" layoutX="14.0" layoutY="43.0" prefHeight="26.0" prefWidth="104.0" />
-      <Button fx:id="insertBtn" layoutX="134.0" layoutY="44.0" mnemonicParsing="false" onAction="#insertInBST" text="Insert" />
-      <Button fx:id="deleteBtn" layoutX="272.0" layoutY="44.0" mnemonicParsing="false" onAction="#deleteInBST" text="Delete" />
-      <Button fx:id="searchBtn" layoutX="204.0" layoutY="44.0" mnemonicParsing="false" onAction="#searchInBST" text="Search" />
+      <Button fx:id="insertBtn" layoutX="134.0" layoutY="44.0" mnemonicParsing="false" onAction="#insertInAVL" text="Insert" />
+      <Button fx:id="deleteBtn" layoutX="272.0" layoutY="44.0" mnemonicParsing="false" onAction="#deleteInAVL" text="Delete" />
+      <Button fx:id="searchBtn" layoutX="204.0" layoutY="44.0" mnemonicParsing="false" onAction="#searchInAVL" text="Search" />
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -39,7 +39,7 @@
             <Label fx:id="myLabel" layoutX="6.0" layoutY="13.0" prefHeight="58.0" prefWidth="570.0" style="-fx-background-color: white; -fx-wrap-text: wrap;" />
          </children></Pane>
       <Button fx:id="inorderBtn" alignment="CENTER" layoutX="580.0" layoutY="43.0" mnemonicParsing="false" onAction="#inorder" text="In-order " />
-      <Button fx:id="clearBSTBtn" alignment="CENTER" layoutX="1370.0" layoutY="44.0" mnemonicParsing="false" onAction="#clearBST" text="clear BST" />
+      <Button fx:id="clearBtn" alignment="CENTER" layoutX="1370.0" layoutY="44.0" mnemonicParsing="false" onAction="#clearAVL" text="clear Tree" />
       <Button fx:id="preorderBtn" alignment="CENTER" layoutX="671.0" layoutY="43.0" mnemonicParsing="false" onAction="#preorder" text="Pre-order " />
       <Button fx:id="postorderBtn" alignment="CENTER" layoutX="765.0" layoutY="44.0" mnemonicParsing="false" onAction="#postorder" text="Post-order " />
       <Button fx:id="levelorderBtn" alignment="CENTER" layoutX="860.0" layoutY="43.0" mnemonicParsing="false" onAction="#levelorder" text="Level-order " />
