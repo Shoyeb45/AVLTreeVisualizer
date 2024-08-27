@@ -103,6 +103,12 @@ public class Controller implements Initializable {
 		bst.levelorder(myLabel);
 	}
 	
+	/**
+	 * Method associated with BST button
+	 */
+	public void dfs() {
+		bst.dfs(myLabel);
+	}
 
 	/**
 	 * Method for clearing pane 
@@ -110,6 +116,8 @@ public class Controller implements Initializable {
 	public void clearBST() {
 		pane.getChildren().clear(); // To clear all the circle and text
 		bst.clear(); 			    // To empty the bst
+		myLabel.setText(null);
+		pane.getChildren().add(myLabel);
 	}
 
 	/**

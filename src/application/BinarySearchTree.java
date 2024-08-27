@@ -118,7 +118,6 @@ public class BinarySearchTree {
 			PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1));
 			pauseTransition.play();
 			pauseTransition.setOnFinished(event -> {
-				System.out.println("Pause Transition");
 				resizeTree();
 			});
 		}
@@ -197,6 +196,7 @@ public class BinarySearchTree {
 
 		// ArrayList for storing the values
 		ArrayList<Integer> trav = new ArrayList<>();
+		
 		Duration[] delay = {Duration.seconds(1)};
 		Timeline timeline = new Timeline();
 
@@ -232,7 +232,6 @@ public class BinarySearchTree {
 		this.utilLevelorder(root, timeline, delay, trav);
 		
 		StringBuilder str = new StringBuilder("Level Order Traversal\n");
-		
 		for(ArrayList<Integer> it: trav) {
 
 			for(int i = 0; i < it.size(); i++) {
@@ -249,14 +248,40 @@ public class BinarySearchTree {
 			if(it.size() == 1) {
 				str.append("]");
 			}
-
+			str.append(" ");
 		}
 
+		
 		// Once animation is finished show traversal series
 		timeline.setOnFinished(event -> {
 			label.setText(String.valueOf(str));
 		});
 		timeline.play(); // Play the animation
+	}
+	
+	/**
+	 * Method for level-order traversal
+	 * @param label : label for showing the traversal 
+	 */
+	public void dfs(Label label) {
+		if(root == null) {
+			Controller.showAlert("Can't perform dfs traversal because binary search tree is empty", "BST is empty", AlertType.INFORMATION);
+			return;
+		}
+		// ArrayList for storing the values
+		ArrayList<Integer> trav = new ArrayList<>();
+				
+		Duration[] delay = {Duration.seconds(1)};
+		Timeline timeline = new Timeline();
+
+		// Calling utility method for actual traversal and animation
+		this.utilDfs(root, timeline, delay, trav);
+		timeline.play(); // Play the animation
+
+		// Once animation is finished show traversal series
+		timeline.setOnFinished(event -> {
+			label.setText(this.makeLabel(trav, "DFS Traversal"));
+		});		
 	}
 	
 	/**
@@ -307,10 +332,10 @@ public class BinarySearchTree {
 			
 			newNode = new BSTNode(val, newCenterX, newCenterY);      // Creating new node
 			pane.getChildren().addAll(newNode.circle, newNode.text); // Add to the pane
-			nodeAppearance(newNode);								 // Call function to show the node apperance animation
+			nodeAppearance(newNode);								 // Call function to show the node appearance animation
 			newNode.addLineToPane(pane);							 // Add line to the pane
 			lastNode = newNode;										
-
+			
 			return newNode;
 		}
 		
@@ -388,7 +413,7 @@ public class BinarySearchTree {
 	 * Method to handle left-right un-balancing case
 	 */
 	private BSTNode leftRightCase(BSTNode node) {
-		node.left = this.rightRotate(node.left);
+		node.left = this.leftRotate(node.left);
 		return leftLeftCase(node);
 	}
 	
@@ -403,7 +428,7 @@ public class BinarySearchTree {
 	 * Method to handle right-left un-balancing case
 	 */
 	private BSTNode rightLeftCase(BSTNode node) {
-		node.right = this.leftRotate(node.right);
+		node.right = this.rightRotate(node.right);
 		return rightRightCase(node);
 	}
 	
@@ -498,7 +523,7 @@ public class BinarySearchTree {
 
 	/**
 	 * Method for updating the centers of circle with new positions 
-	 * @param node		 : Cureent node whose position has to be updatesd
+	 * @param node		 : Current node whose position has to be updated
 	 * @param xPosition  : New x-coordinate of center of circle of node
 	 * @param yPosition  : New y-coordinate of center of circle of node
 	 * @param side		 : To determine which side we are currently
@@ -694,9 +719,13 @@ public class BinarySearchTree {
 					pt.play();
 				});
 				timeline.play();
+				
+				this.updateNode(node);
 			}
 		}
-		return node;
+		
+		this.updateNode(node);
+		return this.balanceTree(node);
 	}
 	
 
@@ -837,6 +866,29 @@ public class BinarySearchTree {
 		}
 	}
 	
+	/**
+	  * Utility method for level-order traversal of binary search tree
+	  * @param root		 : Root node of tree
+	  * @param timeline  : To show the animation of glow
+	  * @param delay	 : To make delay after each node
+	  * @param trav      : ArrayList for storing node value
+	  */
+	private void utilDfs(BSTNode root, Timeline timeline, Duration[] delay, ArrayList<Integer> trav) {
+		trav.add(root.value);
+		this.highlightNode(root, delay[0], timeline, Color.RED);
+		delay[0] = delay[0].add(Duration.seconds(2));
+		
+		if(root.left != null) {
+			utilDfs(root.left, timeline, delay, trav);
+		}
+		
+		if(root.right != null) {
+			utilDfs(root.right, timeline, delay, trav);
+		}
+		this.highlightNode(root, delay[0], timeline, Color.RED);
+		delay[0] = delay[0].add(Duration.seconds(2));
+
+	}
 	
 	 /**
 	  * Method to show current node highlighted 
@@ -895,4 +947,3 @@ public class BinarySearchTree {
 		root.circle.setEffect(null);
 	}
 }	
-
