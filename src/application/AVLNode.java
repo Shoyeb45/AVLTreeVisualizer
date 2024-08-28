@@ -5,6 +5,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class AVLNode {
@@ -51,15 +53,17 @@ public class AVLNode {
 		circle.setCenterY(centerY);			  	  // Setting y-coordinate of center	
 		circle.setStroke(Color.BLACK);        	  // Setting stroke color to black of circle
 		circle.setStrokeWidth(2);             	  // Setting stroke width of circle
-		circle.setFill(Color.LIGHTBLUE);      	  // Setting background color of circle
+		circle.setFill(Color.rgb(82, 109, 130));    // Setting background color of circle
 		
 		// text :- 
+		
+		text.setFont(Font.font("Arial", FontWeight.BOLD, text.getFont().getSize()));
 		Bounds bounds = text.getBoundsInLocal();  // Getting bound parameters for setting the text in center of circle
         double textWidth = bounds.getWidth();     // Getting width of text
         double textHeight = bounds.getHeight();   // Getting height of text
         text.setX(centerX - textWidth / 2);		  // Setting x-coordinate of text in center of circle	
         text.setY(centerY + textHeight / 4);	  // Setting y-coordinate of text in center of circle
-        
+        text.setFill(Color.WHITE);
 	}
 	
 	/**

@@ -895,7 +895,7 @@ public class AVLTree {
 	  * @param root     : Node which need to be highlighted
 	  * @param delay	: To make delay after each node
 	  * @param timeline : To show the animation of glow
-	  * @param color    : Color of boreder effect
+	  * @param color    : Color of border effect
 	  */
 	private void highlightNode(AVLNode root, Duration delay, Timeline timeline, Color color) {
 		KeyFrame glowFrame = new KeyFrame(

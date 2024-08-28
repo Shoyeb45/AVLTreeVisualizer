@@ -13,10 +13,15 @@ public class Main extends Application {
 	public void start(Stage stage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml")); // Loading FXML File
+			
+			String cssPath = this.getClass().getResource("application.css").toExternalForm();
+			
 			Parent root = loader.load();
 			Scene scene = new Scene(root); // Adding it to scene
+			scene.getStylesheets().add(cssPath);
 			stage.setTitle("AVL Tree Visualiser");  // Adding the title in stage
 
+			stage.setResizable(false);
 			stage.setMaximized(true);
 			stage.setScene(scene);   // Set scene on stage
 			stage.show();  // Show scene

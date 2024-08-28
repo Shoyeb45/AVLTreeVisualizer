@@ -4,6 +4,7 @@ package application;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -12,6 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class Controller implements Initializable {
 	private AVLTree avl; // avl object to hold the binary search tree
@@ -72,39 +76,40 @@ public class Controller implements Initializable {
 	 * @param arg1
 	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		avl = new AVLTree(pane); // initializing empty bst
+		avl = new AVLTree(pane); // initializing empty AVL Tree
 	}
 	
 	/**
-	 * Method associated with inorder button
+	 * Method associated with in-order button
 	 */
 	public void inorder() {
 		avl.inorder(myLabel);
+		myLabel.setFont(Font.font("Alice Regular", FontWeight.BOLD, 15));
 	}
 	
 	/**
-	 * Method associated with preorder button
+	 * Method associated with pre-order button
 	 */
 	public void preorder() {
 		avl.preorder(myLabel);
 	}
 	
 	/**
-	 * Method associated with postorder button
+	 * Method associated with post-order button
 	 */
 	public void postorder() {
 		avl.postorder(myLabel);
 	}
 
 	/**
-	 * Method associated with levelorder button
+	 * Method associated with level-order button
 	 */
 	public void levelorder() {
 		avl.levelorder(myLabel);
 	}
 	
 	/**
-	 * Method associated with dfs button
+	 * Method associated with Depth First Search(DFS) button
 	 */
 	public void dfs() {
 		avl.dfs(myLabel);
@@ -115,14 +120,14 @@ public class Controller implements Initializable {
 	 */
 	public void clearAVL() {
 		pane.getChildren().clear(); // To clear all the circle and text
-		avl.clear(); 			    // To empty the bst
+		avl.clear(); 			    // To empty the AVL Tree
 		myLabel.setText(null);
 		pane.getChildren().add(myLabel);
 	}
 
 	/**
 	 * Method to create and show alert
-	 * @param msg   : Meassage to show on alert description
+	 * @param msg   : Message to show on alert description
 	 * @param title : Title of alert box
 	 * @param type  : Type of alert box, like, ERROR, INFORMATION, WARNING
 	 */

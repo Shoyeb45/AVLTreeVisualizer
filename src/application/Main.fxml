@@ -7,30 +7,71 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1469.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1526.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <TextField fx:id="rootVal" layoutX="29.0" layoutY="177.0" prefHeight="26.0" prefWidth="146.0" />
-      <Button fx:id="insertBtn" layoutX="29.0" layoutY="224.0" mnemonicParsing="false" onAction="#insertInAVL" prefHeight="26.0" prefWidth="51.0" text="Insert" />
-      <Button fx:id="deleteBtn" layoutX="30.0" layoutY="311.0" mnemonicParsing="false" onAction="#deleteInAVL" text="Delete" />
-      <Button fx:id="searchBtn" layoutX="29.0" layoutY="268.0" mnemonicParsing="false" onAction="#searchInAVL" text="Search" />
-      <Pane fx:id="pane" layoutX="210.0" layoutY="76.0" prefHeight="710.0" prefWidth="1161.0" style="-fx-background-color: gray;">
+      <TextField fx:id="rootVal" layoutX="29.0" layoutY="200.0" prefHeight="34.0" prefWidth="156.0" promptText="Enter an Integer number" style="-fx-border-color: #27374D; -fx-border-radius: 10; -fx-background-radius: 10;">
+         <font>
+            <Font name="Alice Regular" size="12.0" />
+         </font></TextField>
+      <Button fx:id="insertBtn" layoutX="28.0" layoutY="247.0" mnemonicParsing="false" onAction="#insertInAVL" prefHeight="44.0" prefWidth="110.0" style="-fx-background-color: #27374D; -fx-background-radius: 10;" text="Insert" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font></Button>
+      <Button fx:id="deleteBtn" layoutX="29.0" layoutY="364.0" mnemonicParsing="false" onAction="#deleteInAVL" prefHeight="44.0" prefWidth="110.0" style="-fx-background-color: #27374D; -fx-background-radius: 10;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font></Button>
+      <Button fx:id="searchBtn" layoutX="28.0" layoutY="305.0" mnemonicParsing="false" onAction="#searchInAVL" prefHeight="44.0" prefWidth="110.0" style="-fx-background-color: #27374D; -fx-background-radius: 10;" text="Search" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font></Button>
+      <Pane fx:id="pane" layoutX="210.0" layoutY="76.0" prefHeight="710.0" prefWidth="1161.0" style="-fx-background-color: #DDE6ED; -fx-background-radius: 15; -fx-border-color: #03001C; -fx-border-radius: 15;">
          <children>
-            <Label fx:id="myLabel" layoutX="6.0" layoutY="13.0" prefHeight="58.0" prefWidth="385.0" style="-fx-background-color: white; -fx-wrap-text: wrap;" />
+            <Label fx:id="myLabel" layoutX="12.0" layoutY="12.0" prefHeight="58.0" prefWidth="385.0" style="-fx-background-color: white; -fx-wrap-text: wrap;" textFill="#03001c" />
          </children></Pane>
-      <Button fx:id="inorderBtn" alignment="CENTER" layoutX="1411.0" layoutY="233.0" mnemonicParsing="false" onAction="#inorder" prefHeight="26.0" prefWidth="82.0" text="In-order " textAlignment="CENTER" />
-      <Button fx:id="clearBtn" alignment="CENTER" layoutX="1409.0" layoutY="707.0" mnemonicParsing="false" onAction="#clearAVL" text="clear Tree" />
-      <Button fx:id="preorderBtn" alignment="CENTER" layoutX="1410.0" layoutY="273.0" mnemonicParsing="false" onAction="#preorder" prefHeight="26.0" prefWidth="83.0" text="Pre-order " textAlignment="CENTER" />
-      <Button fx:id="postorderBtn" alignment="CENTER" layoutX="1410.0" layoutY="313.0" mnemonicParsing="false" onAction="#postorder" prefHeight="26.0" prefWidth="84.0" text="Post-order " />
-      <Button fx:id="levelorderBtn" alignment="CENTER" layoutX="1409.0" layoutY="352.0" mnemonicParsing="false" onAction="#levelorder" prefHeight="26.0" prefWidth="84.0" text="Level-order " textAlignment="CENTER" />
-      <Button fx:id="dfsBtn" alignment="CENTER" layoutX="1410.0" layoutY="392.0" mnemonicParsing="false" onAction="#dfs" prefHeight="26.0" prefWidth="82.0" text="DFS" textAlignment="CENTER" />
-      <Label layoutX="592.0" layoutY="16.0" text="AVL Tree Visualiser">
+      <Button fx:id="inorderBtn" alignment="CENTER" layoutX="1402.0" layoutY="162.0" mnemonicParsing="false" onAction="#inorder" prefHeight="44.0" prefWidth="110.0" style="-fx-background-color: #27374D; -fx-background-radius: 10;" text="In-order " textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="clearBtn" alignment="CENTER" layoutX="1402.0" layoutY="709.0" mnemonicParsing="false" onAction="#clearAVL" prefHeight="44.0" prefWidth="110.0" style="-fx-background-color: #27374D; -fx-background-radius: 10;" text="clear Tree" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font></Button>
+      <Button fx:id="preorderBtn" alignment="CENTER" layoutX="1402.0" layoutY="218.0" mnemonicParsing="false" onAction="#preorder" prefHeight="44.0" prefWidth="110.0" style="-fx-background-color: #27374D; -fx-background-radius: 10;" text="Pre-order " textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font></Button>
+      <Button fx:id="postorderBtn" alignment="CENTER" layoutX="1400.0" layoutY="276.0" mnemonicParsing="false" onAction="#postorder" prefHeight="44.0" prefWidth="110.0" style="-fx-background-color: #27374D; -fx-background-radius: 10;" text="Post-order " textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font></Button>
+      <Button fx:id="levelorderBtn" alignment="CENTER" layoutX="1400.0" layoutY="334.0" mnemonicParsing="false" onAction="#levelorder" prefHeight="44.0" prefWidth="110.0" style="-fx-background-color: #27374D; -fx-background-radius: 10;" text="Level-order " textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font></Button>
+      <Button fx:id="dfsBtn" alignment="CENTER" layoutX="1400.0" layoutY="391.0" mnemonicParsing="false" onAction="#dfs" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #27374D; -fx-background-radius: 10;" text="DFS" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font></Button>
+      <Label layoutX="592.0" layoutY="16.0" text="AVL Tree Visualiser" textFill="#03001c">
          <font>
             <Font name="Alice Regular" size="45.0" />
          </font>
       </Label>
-      <Label layoutX="29.0" layoutY="139.0" prefHeight="20.0" prefWidth="158.0" text="Enter an integer Number:">
+      <Label layoutX="29.0" layoutY="160.0" prefHeight="20.0" prefWidth="158.0" text="Enter value">
          <font>
-            <Font size="14.0" />
+            <Font name="Alice Regular" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="36.0" layoutY="103.0" text="Operations" textAlignment="CENTER" textFill="#03001c">
+         <font>
+            <Font name="Alice Regular" size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="1396.0" layoutY="103.0" text="Traversals" textFill="#03001c">
+         <font>
+            <Font name="Alice Regular" size="26.0" />
          </font>
       </Label>
    </children>
