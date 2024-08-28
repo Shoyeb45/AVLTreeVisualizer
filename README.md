@@ -2,8 +2,7 @@
 
 <b>This project provides an overview of AVL visualization and explains the mechanics of balancing within AVL trees.</b>
 ### What is AVL Tree?
-
-- AVL tree is a self-balancing binary search tree specifically designed to maintain a height difference of at most 1 between the left and right subtrees of every node. This strict balancing condition guarantees that the tree's operations such as search, insert, and delete have a time complexity of O(log n) while ensuring the tree remains balanced at all times.
+AVL tree is a self-balancing binary search tree specifically designed to maintain a height difference of at most 1 between the left and right subtrees of every node. This strict balancing condition guarantees that the tree's operations such as search, insert, and delete have a time complexity of O(log n) while ensuring the tree remains balanced at all times.
 
 
 
