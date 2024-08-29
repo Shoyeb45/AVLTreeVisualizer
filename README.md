@@ -1,6 +1,91 @@
 # <b>AVL Tree Visualization in JavaFX</b>
 
-This JavaFX application demonstrates the visualization of an <b>AVL Tree</b> (Adelson-Velsky and Landis Tree), a type of self-balancing binary search tree. The application provides functionalities to insert, search, delete, and perform different tree traversals with visual animations. The AVL Tree maintains a balance factor at each node to ensure the height remains logarithmic, providing efficient operations.
+This JavaFX application demonstrates the visualization of an <b>AVL Tree</b> (Adelson-Velsky and Landis Tree), a type of self-balancing binary search tree. The application provides functionalities to insert, search, delete, and perform different tree traversals with visual animations. 
+
+![Dashboard of Visualizer](./public/image/image1.png)
+<p align=center><i>Dashboard of AVL Tree Visualizer</i></p>
+
+The AVL Tree maintains a balance factor at each node to ensure the height remains logarithmic, providing efficient operations.
+Since the AVL tree is a self-balancing binary tree, so whenever the tree will get unbalanced the balancing algorithm will balance the tree.
+
+The balancing of the tree is taken care by <b>different rotations of AVL Tree</b>. There are two types of rotations of an AVL tree, these are:
+
+1. <b>Left Rotation</b>
+
+    Consider the situation of an tree nodes:
+
+    ![LeftRotation](./public/image/lr.png)
+
+    To balance this we perform following operations:
+    <br>
+    - `45` becomes the new root.
+    - `13` takes ownership of `45`'s left child as its right child, or in this case, null.
+    - `45` takes ownership of `13` as its left child. 
+
+    Now tree will look like:
+
+    ![LRBalanced](./public/image/lrBalanced.png)
+
+    <br>
+2. <b>Right Rotation</b>
+
+    Consider the situation of an tree nodes:
+
+    ![RightRotation](./public/image/rr.png)
+
+    To balance this we perform following operations:
+    <br>
+    - `20` becomes the new root.
+    - `30` takes ownership of `20`'s right child, as its left child. In this case, that value is null.
+    - `20` takes ownership of `30`, as it's right child. 
+
+    Now tree will look like:
+
+    ![RRBalanced](./public/image/rrBalanced.png)
+
+
+<br>
+These two rotaions will take care the following four unbalancing cases of AVL Tree.:
+
+1. Left-Left Unbalancing Case 
+
+    This case looks like:
+
+    ![LeftLeft](./public/image/ll.png)
+
+    To balance this we'll perform single time right-rotation on `10`.
+
+2. Left-Right Unbalancing Case 
+
+    This case looks like:
+
+    ![LeftRight](./public/image/lrun.png)
+
+    To balance this, we'll perform:
+
+    - First, left-rotation on `10`(`left-child of current node`).
+    - Then, right-rotation on `20`. 
+3. Right-Right Unbalancing Case 
+
+    This case looks like:
+
+    ![RightRotation](./public/image/rr.png)
+
+    To balance this we'll perform single time left-rotation on `30`.
+4. Right-Left Unbalancing Case 
+
+    This case looks like:
+
+    ![RightLeft](./public/image/rlun.png)
+
+    To balance this, we'll perform:
+
+    - First, right-rotation on `30`(`right-child of current node`).
+    - Then, left-rotation on `10`. 
+
+
+<br>
+So just by performing these rotations we can balance our binary search tree.
 
 ## <b>Features</b>
 
