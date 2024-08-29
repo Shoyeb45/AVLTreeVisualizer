@@ -117,7 +117,7 @@ So just by performing these rotations we can balance our binary search tree.
     <p align="center">
       <img src="./public/image/insertBtn.png" width=350> 
     </p>
-    <p align=center><i>Button for inserting value</i></p>
+    <p align=center><i>Button for inserting the value</i></p>
 
     <p align="center">
       <img src="./public/image/insertDemon.png"> 
@@ -131,10 +131,11 @@ So just by performing these rotations we can balance our binary search tree.
 
   We can use `search` button to search the value in AVL Tree. The searching will happen by comparing the value to be searched to the value of current node, and according to the value, the search will go to the left or right subtree of an AVL tree.
 
+
     <p align="center">
       <img src="./public/image/searchBtn.png" width=350> 
     </p>
-    <p align=center><i>Button for inserting value</i></p>
+    <p align=center><i>Button for inserting the value</i></p>
 
     <p align="center">
       <img src="./public/image/searchDemon.gif"> 
@@ -143,6 +144,52 @@ So just by performing these rotations we can balance our binary search tree.
 - <b>Deletion</b>: 
 
   Remove nodes while maintaining the balance of the tree.
+
+  We can use `delete` button to delete the value in AVL Tree. 
+
+  <p align="center">
+      <img src="./public/image/deleteBtn.png" width=350> 
+  </p>
+    <p align=center><i>Button for deleting the value</i></p>
+
+  There are four cases of deleting a node:
+
+  1. Node to be deleted is <b>leaf node</b>
+
+      <p align="center">
+          <img src="./public/image/deleteLeaf.gif" width=350> 
+      </p>
+      <p align=center>
+        <i>Node to be deleted - 80: which is leaf node</i>
+      </p>
+    
+  2. Node to be deleted has one child node - only at left
+      <p align="center">
+          <img src="./public/image/deleteLeft.gif" width=350> 
+      </p>
+      <p align=center>
+        <i>Node to be deleted - 120: which has only left node</i>
+      </p>
+
+  3. Node to be deleted has one child node - only at right
+
+      <p align="center">
+          <img src="./public/image/deleteRight.gif" width=350> 
+      </p>
+      <p align=center>
+        <i>Node to be deleted - 23: which has only right node</i>
+      </p>
+  
+
+  4. Node to be deleted has both of children
+
+      <p align="center">
+          <img src="./public/image/deleteBoth.gif"> 
+      </p>
+      <p align=center>
+        <i>Node to be deleted - 30: which has both the child</i>
+      </p>
+
   
 ## 2. <b>Traversals</b>:
   - <b>Inorder</b>: Traverse the tree in an ascending order.
