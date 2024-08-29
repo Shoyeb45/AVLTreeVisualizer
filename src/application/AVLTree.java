@@ -19,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -951,6 +950,7 @@ public class AVLTree {
 	}
 	/**
 	 * Method to show the new window of traversal series
+	 * @param 
 	 */
 	private void showTraversalResult(String label, String travTitle) {
         Stage resultStage = new Stage();

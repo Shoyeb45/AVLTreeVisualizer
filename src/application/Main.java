@@ -2,10 +2,10 @@ package application;
 	
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 
 public class Main extends Application {
@@ -20,7 +20,8 @@ public class Main extends Application {
 			Scene scene = new Scene(root); // Adding it to scene
 			scene.getStylesheets().add(cssPath);
 			stage.setTitle("AVL Tree Visualiser");  // Adding the title in stage
-
+			Image icon = new Image("favico.png");
+			stage.getIcons().add(icon);
 			stage.setResizable(false);
 			stage.setMaximized(true);
 			stage.setScene(scene);   // Set scene on stage

@@ -4,18 +4,14 @@ package application;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 public class Controller implements Initializable {
 	private AVLTree avl; // avl object to hold the binary search tree
@@ -28,6 +24,8 @@ public class Controller implements Initializable {
 	@FXML
 	private Pane pane;  // Pane to hold the binary search tree
 	
+	@FXML
+	private AnchorPane myAnchorPane;
 
 	/**
 	 * Method for inserting value in Tree
