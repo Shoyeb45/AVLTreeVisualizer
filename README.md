@@ -118,6 +118,7 @@ So just by performing these rotations we can balance our binary search tree.
       <img src="./public/image/insertBtn.png" width=350> 
     </p>
     <p align=center><i>Button for inserting value</i></p>
+
     <p align="center">
       <img src="./public/image/insertDemon.png"> 
     </p>
@@ -129,6 +130,16 @@ So just by performing these rotations we can balance our binary search tree.
   Find a node in the tree with visual feedback indicating whether the node exists.
 
   We can use `search` button to search the value in AVL Tree. The searching will happen by comparing the value to be searched to the value of current node, and according to the value, the search will go to the left or right subtree of an AVL tree.
+
+    <p align="center">
+      <img src="./public/image/searchBtn.png" width=350> 
+    </p>
+    <p align=center><i>Button for inserting value</i></p>
+
+    <p align="center">
+      <img src="./public/image/searchDemon.gif"> 
+    </p>
+    <p align=center><i>Demonstration of searching value 80 in AVL Tree</i></p>
 - <b>Deletion</b>: 
 
   Remove nodes while maintaining the balance of the tree.
