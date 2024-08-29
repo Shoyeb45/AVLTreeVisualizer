@@ -191,14 +191,44 @@ So just by performing these rotations we can balance our binary search tree.
       </p>
 
   
-## 2. <b>Traversals</b>:
-  - <b>Inorder</b>: Traverse the tree in an ascending order.
-  - <b>Preorder</b>: Traverse the tree in a root-left-right order.
-  - <b>Postorder</b>: Traverse the tree in a left-right-root order.
-  - <b>Level Order</b>: Traverse the tree level by level.
-  - <b>DFS</b>: Perform a depth-first traversal.
+## 2. <b>Traversals</b>
+
+  - <b>Inorder</b>: 
+  
+    Traverse the tree in an ascending order.
+
+
+  - <b>Preorder</b>: 
+  
+    Traverse the tree in a root-left-right order.
+
+  - <b>Postorder</b>: 
+  
+    Traverse the tree in a left-right-root order.
+
+  - <b>Level Order</b>: 
+  
+    Traverse the tree level by level.
+
+  - <b>DFS</b>: 
+  
+    Perform a depth-first traversal.
+  - <b>Visual Feedback</b>: Animations for insertion, deletion, and traversal steps to provide an engaging learning experience.
+
 - <b>Clear</b>: Reset the AVL Tree to an empty state.
-- <b>Visual Feedback</b>: Animations for insertion, deletion, and traversal steps to provide an engaging learning experience.
+
+## Code Structure 
+
+- <b>Main.java</b> : It's the main file of application, it loads FXML file and set the scene and then show the stage. Entire application runs from this file.
+
+- <b>AVLTree.java</b> : Contains all the methods and animation related code to AVL tree. All the drawing and animations are executing from this file.
+
+- <b>AVLNode.java</b> : This file contains a node structure of an AVL tree. It consists of a methods to set the positions of circle and line. 
+
+- <b>Main.fxml</b> : It is used for basic UI element using scene-builder. AnchorPane, Label, TextBox,..etc elements are used from scene builder.
+
+- <b>Controller.java</b> : This file contains implementation of all on-action methods required for basic operation. Like insert, search, delete...
+
 
 ## <b>Class Details</b>
 
