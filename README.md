@@ -1,7 +1,7 @@
 # <p align=center><b>AVL Tree Visualization in JavaFX</b></p>
 
 <div style="display:flex; justify-content:center;">
-<img src="./public/image/logo.png" width="200px" height="200px">
+  <img src="./public/image/logo.png" width="200px" height="200px">
 </div>
 
 <br>
