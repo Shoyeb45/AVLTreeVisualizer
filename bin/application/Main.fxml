@@ -25,10 +25,7 @@
          <font>
             <Font name="System Bold Italic" size="17.0" />
          </font></Button>
-      <Pane fx:id="pane" layoutX="210.0" layoutY="76.0" prefHeight="710.0" prefWidth="1161.0" style="-fx-background-color: #DDE6ED; -fx-background-radius: 15; -fx-border-color: #03001C; -fx-border-radius: 15;">
-         <children>
-            <Label fx:id="myLabel" layoutX="12.0" layoutY="12.0" prefHeight="58.0" prefWidth="385.0" style="-fx-background-color: white; -fx-wrap-text: wrap;" textFill="#03001c" />
-         </children></Pane>
+      <Pane fx:id="pane" layoutX="210.0" layoutY="76.0" prefHeight="710.0" prefWidth="1161.0" style="-fx-background-color: #DDE6ED; -fx-background-radius: 15; -fx-border-color: #03001C; -fx-border-radius: 15;" />
       <Button fx:id="inorderBtn" alignment="CENTER" layoutX="1402.0" layoutY="162.0" mnemonicParsing="false" onAction="#inorder" prefHeight="44.0" prefWidth="110.0" style="-fx-background-color: #27374D; -fx-background-radius: 10;" text="In-order " textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="17.0" />

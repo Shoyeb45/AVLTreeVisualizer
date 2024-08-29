@@ -13,12 +13,18 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 public class AVLTree {
 	
@@ -125,9 +131,8 @@ public class AVLTree {
 	
 	/**
 	 * Method for in-order traversal
-	 * @param label : label for showing the traversal 
 	*/
-	public void inorder(Label label) {
+	public void inorder() {
 
 		// If tree is empty
 		if(root == null) {
@@ -147,7 +152,7 @@ public class AVLTree {
 
 		// Once animation is finished show traversal series
 		timeline.setOnFinished(event -> {
-			label.setText(this.makeLabel(trav, "Inorder Traversal"));
+			this.showTraversalResult(this.makeLabel(trav), "Inorder Traversal: ");
 		});
 		
 	}
@@ -156,9 +161,8 @@ public class AVLTree {
 	
 	/**
 	 * Method for pre-order traversal
-	 * @param label : label for showing the traversal 
 	 */
-	public void preorder(Label label) {
+	public void preorder() {
 
 		// If tree is empty
 		if(root == null) {
@@ -177,16 +181,15 @@ public class AVLTree {
 
 		// Once animation is finished show traversal series
 		timeline.setOnFinished(event -> {
-			label.setText(this.makeLabel(trav, "Preorder Traversal"));
+			this.showTraversalResult(this.makeLabel(trav), "Preorder Traversal: ");
 		});
 		
 	}
 	
 	/**
 	 * Method for post-order traversal
-	 * @param label : label for showing the traversal 
 	 */
-	public void postorder(Label label) {
+	public void postorder() {
 
 		// If tree is empty
 		if(root == null) {
@@ -206,7 +209,7 @@ public class AVLTree {
 
 		// Once animation is finished show traversal series
 		timeline.setOnFinished(event -> {
-			label.setText(this.makeLabel(trav, "Postorder Traversal"));
+			this.showTraversalResult(this.makeLabel(trav), "Postorder Traversal: ");
 		});
 	}
 	
@@ -214,7 +217,7 @@ public class AVLTree {
 	 * Method for level-order traversal
 	 * @param label : label for showing the traversal 
 	 */
-	public void levelorder(Label label) {
+	public void levelorder() {
 
 		// If tree is empty
 		if(root == null) {
@@ -231,7 +234,7 @@ public class AVLTree {
 		// Calling utility method for actual traversal and animation
 		this.utilLevelorder(root, timeline, delay, trav);
 		
-		StringBuilder str = new StringBuilder("Level Order Traversal\n");
+		StringBuilder str = new StringBuilder("");
 		for(ArrayList<Integer> it: trav) {
 
 			for(int i = 0; i < it.size(); i++) {
@@ -254,7 +257,7 @@ public class AVLTree {
 		
 		// Once animation is finished show traversal series
 		timeline.setOnFinished(event -> {
-			label.setText(String.valueOf(str));
+			this.showTraversalResult(str.toString(), "Level Order:");
 		});
 		timeline.play(); // Play the animation
 	}
@@ -263,7 +266,7 @@ public class AVLTree {
 	 * Method for level-order traversal
 	 * @param label : label for showing the traversal 
 	 */
-	public void dfs(Label label) {
+	public void dfs() {
 		if(root == null) {
 			Controller.showAlert("Can't perform dfs traversal because AVL tree is empty", "AVL is empty", AlertType.INFORMATION);
 			return;
@@ -280,7 +283,7 @@ public class AVLTree {
 
 		// Once animation is finished show traversal series
 		timeline.setOnFinished(event -> {
-			label.setText(this.makeLabel(trav, "DFS Traversal"));
+			this.showTraversalResult(this.makeLabel(trav), "DFS Traversal: ");
 		});		
 	}
 	
@@ -918,8 +921,8 @@ public class AVLTree {
 	 * @param head : It's heading like, inorder, preorder, postorder..
 	 * @return
 	 */
-	private String makeLabel(ArrayList<Integer> trav, String head) {
-		StringBuilder ans = new StringBuilder(head + "\n");
+	private String makeLabel(ArrayList<Integer> trav) {
+		StringBuilder ans = new StringBuilder("");
 		
 		for(int x : trav) {
 			ans.append(x).append(" ");
@@ -946,4 +949,31 @@ public class AVLTree {
 		root.circle.setStroke(Color.BLACK);
 		root.circle.setEffect(null);
 	}
+	/**
+	 * Method to show the new window of traversal series
+	 */
+	private void showTraversalResult(String label, String travTitle) {
+        Stage resultStage = new Stage();
+        resultStage.setTitle("Traversal Result");
+        
+        Label title = new Label(travTitle);
+        AnchorPane layout = new AnchorPane();
+        Scene scene = new Scene(layout, 400, 200);
+        title.setLayoutX(115);
+        title.setLayoutY(10);
+      
+        title.setFont(Font.font("Alice", FontWeight.BOLD, 20));
+        
+        Label resultLabel = new Label(label);
+        resultLabel.setLayoutX(12);
+        resultLabel.setLayoutY(50);
+        resultLabel.setFont(Font.font("Alice", FontWeight.NORMAL, 16));
+        resultLabel.setWrapText(true);
+        layout.getChildren().addAll(title, resultLabel);
+
+        resultStage.setResizable(false);
+        resultStage.setScene(scene);
+        resultStage.show();
+    }
+
 }	

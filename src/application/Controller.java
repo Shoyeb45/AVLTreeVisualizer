@@ -28,8 +28,6 @@ public class Controller implements Initializable {
 	@FXML
 	private Pane pane;  // Pane to hold the binary search tree
 	
-	@FXML
-	private Label myLabel;
 
 	/**
 	 * Method for inserting value in Tree
@@ -83,36 +81,35 @@ public class Controller implements Initializable {
 	 * Method associated with in-order button
 	 */
 	public void inorder() {
-		avl.inorder(myLabel);
-		myLabel.setFont(Font.font("Alice Regular", FontWeight.BOLD, 15));
+		avl.inorder();
 	}
 	
 	/**
 	 * Method associated with pre-order button
 	 */
 	public void preorder() {
-		avl.preorder(myLabel);
+		avl.preorder();
 	}
 	
 	/**
 	 * Method associated with post-order button
 	 */
 	public void postorder() {
-		avl.postorder(myLabel);
+		avl.postorder();
 	}
 
 	/**
 	 * Method associated with level-order button
 	 */
 	public void levelorder() {
-		avl.levelorder(myLabel);
+		avl.levelorder();
 	}
 	
 	/**
 	 * Method associated with Depth First Search(DFS) button
 	 */
 	public void dfs() {
-		avl.dfs(myLabel);
+		avl.dfs();
 	}
 
 	/**
@@ -121,8 +118,6 @@ public class Controller implements Initializable {
 	public void clearAVL() {
 		pane.getChildren().clear(); // To clear all the circle and text
 		avl.clear(); 			    // To empty the AVL Tree
-		myLabel.setText(null);
-		pane.getChildren().add(myLabel);
 	}
 
 	/**
