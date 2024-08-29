@@ -1,8 +1,8 @@
 # <p align=center><b>AVL Tree Visualization in JavaFX</b></p>
 
-<div style="display:flex; justify-content:center;">
+<p align=center>
   <img src="./public/image/logo.png" width="200px" height="200px">
-</div>
+</p>
 
 <br>
 This JavaFX application demonstrates the visualization of an <b>AVL Tree</b> (Adelson-Velsky and Landis Tree), a type of self-balancing binary search tree. The application provides functionalities to insert, search, delete, and perform different tree traversals with visual animations. 
