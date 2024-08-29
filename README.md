@@ -6,6 +6,8 @@
 
 <br>
 This JavaFX application demonstrates the visualization of an <b>AVL Tree</b> (Adelson-Velsky and Landis Tree), a type of self-balancing binary search tree. The application provides functionalities to insert, search, delete, and perform different tree traversals with visual animations. 
+<br>
+<br>
 
 ![Dashboard of Visualizer](./public/image/image1.png)
 <p align=center><i>Dashboard of AVL Tree Visualizer</i></p>
@@ -94,10 +96,44 @@ So just by performing these rotations we can balance our binary search tree.
 
 ## <b>Features</b>
 
-- <b>Insertion</b>: Add nodes to the AVL Tree, ensuring it remains balanced. Visualize the balancing process with animations.
-- <b>Deletion</b>: Remove nodes while maintaining the balance of the tree.
-- <b>Search</b>: Find a node in the tree with visual feedback indicating whether the node exists.
-- <b>Traversals</b>:
+### <b>Text Box</b>
+  The node of tree can contain integer value. The integer value can be entered in the given text box, if the value entered will not be valid then it will not accept it. 
+
+  So the user should input the value ranging from `-2,147,483,648` to `2,147,483,647`.
+
+  But for better visualisation try to insert lower integer values.
+  <p align=center>
+    <img src="./public/image/textBox.png">
+  </p>
+  <p align=center><i>Text Box for giving values</i></p>
+
+## 1. Operations
+- <b>Insertion</b>:
+
+   Add nodes to the AVL Tree, ensuring it remains balanced. Visualize the balancing process with animations.
+
+   Node value can inserted by using `insert` button on left side below the text-box. 
+    
+    <p align="center">
+      <img src="./public/image/insertBtn.png" width=350> 
+    </p>
+    <p align=center><i>Button for inserting value</i></p>
+    <p align="center">
+      <img src="./public/image/insertDemon.png"> 
+    </p>
+    <p align=center><i>Demonstration of using insert button</i></p>
+
+
+- <b>Search</b>: 
+
+  Find a node in the tree with visual feedback indicating whether the node exists.
+
+  We can use `search` button to search the value in AVL Tree. The searching will happen by comparing the value to be searched to the value of current node, and according to the value, the search will go to the left or right subtree of an AVL tree.
+- <b>Deletion</b>: 
+
+  Remove nodes while maintaining the balance of the tree.
+  
+## 2. <b>Traversals</b>:
   - <b>Inorder</b>: Traverse the tree in an ascending order.
   - <b>Preorder</b>: Traverse the tree in a root-left-right order.
   - <b>Postorder</b>: Traverse the tree in a left-right-root order.
