@@ -357,3 +357,14 @@ The `AVLTree` class handles the logic and animation of the AVL tree. Below is a 
 2. Import the project into your Java IDE (like IntelliJ IDEA, Eclipse with e(fx)clipse).
 3. Ensure JavaFX is properly configured in your IDE.
 4. Run the main class, which initializes the JavaFX application and displays the AVL Tree visualization.
+
+
+
+## Credits
+
+1. [Our Mentor - Deeapak Sir](https://github.com/Enigma277)
+2. [AVL Tree Visualisation - Motivation](https://www.cs.usfca.edu/~galles/visualization/AVLtree.html)
+3. [Youtube tutorial for javafx](https://youtu.be/9XJicRt_FaI?si=7QaHAzPgneGxgFu1)
+4. [StackOverflow](https://stackoverflow.com/)
+5. [ChatGPT](https://chatgpt.com/)
+6. [Javafx docs](https://openjfx.io/openjfx-docs/)
