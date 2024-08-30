@@ -197,39 +197,83 @@ So just by performing these rotations we can balance our binary search tree.
   
     Traverse the tree in an ascending order.
 
+    <p align=center>
+      <img src="./public/image/inorder.gif" width=550>
+    </p>
 
   - <b>Preorder</b>: 
   
     Traverse the tree in a root-left-right order.
 
+    <p align=center>
+      <img src="./public/image/preorder.gif" width=550>
+    </p>
+
   - <b>Postorder</b>: 
   
     Traverse the tree in a left-right-root order.
+
+    <p align=center>
+      <img src="./public/image/postorder.gif" width=550>
+    </p>
+
 
   - <b>Level Order</b>: 
   
     Traverse the tree level by level.
 
+    <p align=center>
+      <img src="./public/image/levelOrder.gif" width=550>
+    </p>
+
   - <b>DFS</b>: 
   
     Perform a depth-first traversal.
+
+    <p align=center>
+      <img src="./public/image/dfs.gif" width=550>
+    </p>
+
   - <b>Visual Feedback</b>: Animations for insertion, deletion, and traversal steps to provide an engaging learning experience.
 
-- <b>Clear</b>: Reset the AVL Tree to an empty state.
+- <b>Clear</b>
+
+  Reset the AVL Tree to an empty state.
+
+  Clear the screen by pressing on `clear Tree` button.
+  <p align=center>
+    <img src="./public/image/clearBtn.png">
+    <p align=center><i>Clear button</i></p>
+  </p>
+  <br>
+  <br>
+  <p align=center>
+    <img src="./public/image/clear.gif" width=550>
+  </p>
 
 ## Code Structure 
 
-- <b>Main.java</b> : It's the main file of application, it loads FXML file and set the scene and then show the stage. Entire application runs from this file.
+- [<b>Main.java</b>](./src/application/Main.java) 
 
-- <b>AVLTree.java</b> : Contains all the methods and animation related code to AVL tree. All the drawing and animations are executing from this file.
+  It's the main file of application, it loads FXML file and set the scene and then show the stage. Entire application runs from this file.
 
-- <b>AVLNode.java</b> : This file contains a node structure of an AVL tree. It consists of a methods to set the positions of circle and line. 
+- [<b>AVLTree.java</b>](./src/application/AVLTree.java) 
 
-- <b>Main.fxml</b> : It is used for basic UI element using scene-builder. AnchorPane, Label, TextBox,..etc elements are used from scene builder.
+   Contains all the methods and animation related code to AVL tree. All the drawing and animations are executing from this file.
 
-- <b>Controller.java</b> : This file contains implementation of all on-action methods required for basic operation. Like insert, search, delete...
+- [<b>AVLNode.java</b>](./src/application/AVLNode.java) 
 
+   This file contains a node structure of an AVL tree. It consists of a methods to set the positions of circle and line. 
 
+- [<b>Main.fxml</b>](./src/application/Main.fxml) 
+
+   It is used for basic UI element using scene-builder. AnchorPane, Label, TextBox,..etc elements are used from scene builder.
+
+- [<b>Controller.java</b>](./src/application/Controller.java) 
+
+   This file contains implementation of all on-action methods required for basic operation. Like insert, search, delete...
+
+<!-- 
 ## <b>Class Details</b>
 
 ### <b>AVLTree Class</b>
@@ -284,7 +328,7 @@ The `AVLTree` class handles the logic and animation of the AVL tree. Below is a 
 
 - <b>setNewPositions(AVLNode node, double xPosition, double yPosition, byte side, double lineStartX, double lineStartY, Line line)</b>: Updates the positions of nodes recursively to maintain the visual structure.
 
-- <b>resizeWidths(AVLNode node)</b>: Calculates and updates the left and right widths of nodes for proper positioning.
+- <b>resizeWidths(AVLNode node)</b>: Calculates and updates the left and right widths of nodes for proper positioning. -->
 
 ## <b>How to Use</b>
 
