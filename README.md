@@ -94,6 +94,14 @@ These two rotaions will take care the following four unbalancing cases of AVL Tr
 <br>
 So just by performing these rotations we can balance our binary search tree.
 
+## <b>How to Use</b>
+
+1. <b>Insert Nodes</b>: Click the insert button to add nodes to the tree. The tree will automatically balance itself.
+2. <b>Search Nodes</b>: Use the search function to locate a specific value in the tree.
+3. <b>Delete Nodes</b>: Click the delete button to remove a node and see the balancing in action.
+4. <b>Perform Traversals</b>: Choose from different traversal options to see the order of nodes visually.
+5. <b>Clear Tree</b>: Reset the tree using the clear function.
+
 ## <b>Features</b>
 
 ### <b>Text Box</b>
@@ -247,8 +255,10 @@ So just by performing these rotations we can balance our binary search tree.
   </p>
   <br>
   <br>
+
   <p align=center>
     <img src="./public/image/clear.gif" width=550>
+    <p align=center>Clearing tree</p>
   </p>
 
 ## Code Structure 
@@ -272,6 +282,8 @@ So just by performing these rotations we can balance our binary search tree.
 - [<b>Controller.java</b>](./src/application/Controller.java) 
 
    This file contains implementation of all on-action methods required for basic operation. Like insert, search, delete...
+
+> <b>See each file for more detailed documentation, and in-depth explanations of how each class functions</b>
 
 <!-- 
 ## <b>Class Details</b>
@@ -330,13 +342,7 @@ The `AVLTree` class handles the logic and animation of the AVL tree. Below is a 
 
 - <b>resizeWidths(AVLNode node)</b>: Calculates and updates the left and right widths of nodes for proper positioning. -->
 
-## <b>How to Use</b>
 
-1. <b>Insert Nodes</b>: Click the insert button to add nodes to the tree. The tree will automatically balance itself.
-2. <b>Search Nodes</b>: Use the search function to locate a specific value in the tree.
-3. <b>Delete Nodes</b>: Click the delete button to remove a node and see the balancing in action.
-4. <b>Perform Traversals</b>: Choose from different traversal options to see the order of nodes visually.
-5. <b>Clear Tree</b>: Reset the tree using the clear function.
 
 ## <b>Requirements</b>
 
