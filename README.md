@@ -341,8 +341,10 @@ The `AVLTree` class handles the logic and animation of the AVL tree. Below is a 
 - <b>setNewPositions(AVLNode node, double xPosition, double yPosition, byte side, double lineStartX, double lineStartY, Line line)</b>: Updates the positions of nodes recursively to maintain the visual structure.
 
 - <b>resizeWidths(AVLNode node)</b>: Calculates and updates the left and right widths of nodes for proper positioning. -->
+## Built With
 
-
+- Programming Langauge: `Java 17.0.0`
+- Library Used: `JavaFX 22.0.2`
 
 ## <b>Requirements</b>
 
